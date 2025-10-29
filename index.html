@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarkson Valuation Challenge - Columbia Business School</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #b9d9eb 0%, #9ac2da 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #002b5c 0%, #0055a5 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .school-name {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 3px solid #b9d9eb;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #0055a5;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .step-container {
+            display: none;
+        }
+
+        .step-container.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-header {
+            background: linear-gradient(135deg, #0055a5 0%, #003d7a 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .step-title {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .instruction {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0055a5;
+        }
+
+        .question {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #0055a5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0055a5 0%, #003d7a 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 85, 165, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .feedback {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+            display: block;
+        }
+
+        .hint {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .hint.show {
+            display: block;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0055a5 0%, #003d7a 100%);
+            transition: width 0.5s;
+            border-radius: 10px;
+        }
+
+        .completion-screen {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .completion-screen.active {
+            display: block;
+        }
+
+        .trophy {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+
+        .final-score {
+            font-size: 3em;
+            color: #0055a5;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-table th {
+            background: #0055a5;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .formula-box {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            border-left: 4px solid #0055a5;
+        }
+
+        .columbia-badge {
+            display: inline-block;
+            background: white;
+            color: #002b5c;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>🎯 Clarkson Valuation Challenge</h1>
+            <div class="school-name">Columbia Business School</div>
+            <div class="columbia-badge">Corporate Finance</div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value" id="cash">$0</div>
+                <div class="stat-label">Total Cash Earned</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="step-count">0/16</div>
+                <div class="stat-label">Steps Completed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="accuracy">0%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress" style="width: 0%"></div>
+        </div>
+
+        <div class="content">
+            <!-- Introduction -->
+            <div class="step-container active" id="step-intro">
+                <div class="step-header">
+                    <div class="step-number">🚀 GET STARTED</div>
+                    <div class="step-title">Welcome to the Clarkson Valuation Challenge!</div>
+                </div>
+                <div class="instruction">
+                    <h3>📚 Your Mission:</h3>
+                    <p>You're a financial analyst tasked with valuing Clarkson Lumber Company. You'll work through a complete DCF (Discounted Cash Flow) valuation to determine the Market Value of Equity.</p>
+                    <br>
+                    <h3>💰 How to Play:</h3>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Complete 16 steps of the valuation process</li>
+                        <li>Answer questions correctly to earn cash rewards</li>
+                        <li>Get hints if you're stuck (but they reduce your reward)</li>
+                        <li>Build your valuation skills step-by-step</li>
+                    </ul>
+                    <br>
+                    <h3>🎯 Your Goal:</h3>
+                    <p><strong>Calculate the Market Value of Equity = Enterprise Value + Non-Operating Assets - Debt</strong></p>
+                </div>
+                <button class="btn-primary" onclick="nextStep()">Start the Challenge! 💪</button>
+            </div>
+
+            <!-- Step 1: Non-Operating Assets -->
+            <div class="step-container" id="step-1">
+                <div class="step-header">
+                    <div class="step-number">STEP 1 OF 16</div>
+                    <div class="step-title">Identify Non-Operating Assets</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>What you're looking for:</strong> Cash and other assets not used in operations</p>
+                    <p>These assets add value but don't generate operating cash flows.</p>
+                    <br>
+                    <p><strong>From the 1995 Balance Sheet:</strong></p>
+                    <p>Review the balance sheet and identify the non-operating assets (hint: look for cash)</p>
+                </div>
+                <div class="question">
+                    <div class="question-text">💵 What is the value of Non-Operating Assets in thousands?</div>
+                    <div class="input-group">
+                        <label>Non-Operating Assets ($000s):</label>
+                        <input type="number" id="q1-answer" placeholder="Enter amount">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(1, 100)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(1)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-1">
+                        <strong>Hint:</strong> Look for "Cash" on the 1995 Balance Sheet. This is the primary non-operating asset.
+                    </div>
+                    <div class="feedback" id="feedback-1"></div>
+                </div>
+            </div>
+
+            <!-- Step 2: Identify Debt -->
+            <div class="step-container" id="step-2">
+                <div class="step-header">
+                    <div class="step-number">STEP 2 OF 16</div>
+                    <div class="step-title">Identify All Interest-Bearing Debt</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>What you're looking for:</strong> All liabilities that require interest payments</p>
+                    <br>
+                    <p><strong>From the 1995 Balance Sheet, sum:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Notes payable, bank: $390</li>
+                        <li>Note payable to Holtz, current portion: $100</li>
+                        <li>Notes payable, trade: $127</li>
+                        <li>Term loan, current portion: $20</li>
+                        <li>Term loan: $100</li>
+                        <li>Note payable, Mr. Holtz: $0</li>
+                    </ul>
+                    <br>
+                    <p><strong>⚠️ Key point:</strong> Do NOT include Accounts Payable or Accrued Expenses (these are operating liabilities, not debt)</p>
+                </div>
+                <div class="question">
+                    <div class="question-text">📊 What is the Total Debt in thousands?</div>
+                    <div class="input-group">
+                        <label>Total Debt ($000s):</label>
+                        <input type="number" id="q2-answer" placeholder="Enter total debt">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(2, 150)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(2)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-2">
+                        <strong>Hint:</strong> Add up all 6 items listed above: $390 + $100 + $127 + $20 + $100 + $0 = ?
+                    </div>
+                    <div class="feedback" id="feedback-2"></div>
+                </div>
+            </div>
+
+            <!-- Step 3: 1996 Sales Projection -->
+            <div class="step-container" id="step-3">
+                <div class="step-header">
+                    <div class="step-number">STEP 3 OF 16</div>
+                    <div class="step-title">Project 1996 Sales</div>
+                </div>
+                <div class="instruction">
+                    <p>Now we begin projecting Free Cash Flows. First, we need to project sales.</p>
+                    <p><strong>Given:</strong> 1996 Sales = $5,500 (this is provided in the case)</p>
+                </div>
+                <div class="question">
+                    <div class="question-text">📈 Confirm: What are the projected 1996 Sales in thousands?</div>
+                    <div class="input-group">
+                        <label>1996 Sales ($000s):</label>
+                        <input type="number" id="q3-answer" placeholder="Enter sales">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(3, 50)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(3)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-3">
+                        <strong>Hint:</strong> This is given directly in the case: $5,500
+                    </div>
+                    <div class="feedback" id="feedback-3"></div>
+                </div>
+            </div>
+
+            <!-- Step 4: 1996 COGS -->
+            <div class="step-container" id="step-4">
+                <div class="step-header">
+                    <div class="step-number">STEP 4 OF 16</div>
+                    <div class="step-title">Calculate 1996 COGS</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">COGS = Sales × (COGS/Sales ratio)</div>
+                    <p><strong>Given:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>1996 Sales = $5,500</li>
+                        <li>COGS/Sales ratio = 75.0%</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate 1996 COGS in thousands:</div>
+                    <div class="input-group">
+                        <label>1996 COGS ($000s):</label>
+                        <input type="number" id="q4-answer" placeholder="Enter COGS">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(4, 100)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(4)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-4">
+                        <strong>Hint:</strong> $5,500 × 75.0% = $5,500 × 0.75 = ?
+                    </div>
+                    <div class="feedback" id="feedback-4"></div>
+                </div>
+            </div>
+
+            <!-- Step 5: 1996 Operating Expenses -->
+            <div class="step-container" id="step-5">
+                <div class="step-header">
+                    <div class="step-number">STEP 5 OF 16</div>
+                    <div class="step-title">Calculate 1996 Operating Expenses</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">Operating Expenses = Sales × (Op Exp/Sales ratio)</div>
+                    <p><strong>Given:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>1996 Sales = $5,500</li>
+                        <li>Op Exp/Sales ratio = 20.4%</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate 1996 Operating Expenses in thousands:</div>
+                    <div class="input-group">
+                        <label>1996 Operating Expenses ($000s):</label>
+                        <input type="number" id="q5-answer" placeholder="Enter Op Exp">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(5, 100)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(5)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-5">
+                        <strong>Hint:</strong> $5,500 × 20.4% = $5,500 × 0.204 = ?
+                    </div>
+                    <div class="feedback" id="feedback-5"></div>
+                </div>
+            </div>
+
+            <!-- Step 6: 1996 EBIT -->
+            <div class="step-container" id="step-6">
+                <div class="step-header">
+                    <div class="step-number">STEP 6 OF 16</div>
+                    <div class="step-title">Calculate 1996 EBIT</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">EBIT = Sales - COGS - Operating Expenses</div>
+                    <p><strong>Your calculations so far:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>1996 Sales = $5,500</li>
+                        <li>1996 COGS = $4,125</li>
+                        <li>1996 Op Exp = $1,122</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate 1996 EBIT in thousands:</div>
+                    <div class="input-group">
+                        <label>1996 EBIT ($000s):</label>
+                        <input type="number" id="q6-answer" placeholder="Enter EBIT">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(6, 150)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(6)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-6">
+                        <strong>Hint:</strong> $5,500 - $4,125 - $1,122 = ?
+                    </div>
+                    <div class="feedback" id="feedback-6"></div>
+                </div>
+            </div>
+
+            <!-- Step 7: 1996 NOP -->
+            <div class="step-container" id="step-7">
+                <div class="step-header">
+                    <div class="step-number">STEP 7 OF 16</div>
+                    <div class="step-title">Calculate 1996 Net Operating Profit (NOP)</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">NOP = EBIT - Tax on EBIT<br>Tax on EBIT = EBIT × Tax Rate</div>
+                    <p><strong>Given:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>1996 EBIT = $253</li>
+                        <li>Tax Rate = 35%</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate 1996 NOP (Net Operating Profit) in thousands:</div>
+                    <div class="input-group">
+                        <label>1996 NOP ($000s):</label>
+                        <input type="number" id="q7-answer" placeholder="Enter NOP">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(7, 150)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(7)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-7">
+                        <strong>Hint:</strong> First calculate Tax: $253 × 0.35 = $89. Then: NOP = $253 - $89 = ?
+                    </div>
+                    <div class="feedback" id="feedback-7"></div>
+                </div>
+            </div>
+
+            <!-- Step 8: 1996 Net Fixed Assets -->
+            <div class="step-container" id="step-8">
+                <div class="step-header">
+                    <div class="step-number">STEP 8 OF 16</div>
+                    <div class="step-title">Calculate 1996 Net Fixed Assets</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">NFA = Sales / NFATO<br>Where NFATO = Net Fixed Asset Turnover</div>
+                    <p><strong>Given:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>1996 Sales = $5,500</li>
+                        <li>NFATO (Net Fixed Asset Turnover) = 12.5</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate 1996 Net Fixed Assets in thousands:</div>
+                    <div class="input-group">
+                        <label>1996 NFA ($000s):</label>
+                        <input type="number" id="q8-answer" placeholder="Enter NFA">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(8, 150)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(8)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-8">
+                        <strong>Hint:</strong> $5,500 / 12.5 = ?
+                    </div>
+                    <div class="feedback" id="feedback-8"></div>
+                </div>
+            </div>
+
+            <!-- Step 9: ΔNFA (Change in NFA) -->
+            <div class="step-container" id="step-9">
+                <div class="step-header">
+                    <div class="step-number">STEP 9 OF 16</div>
+                    <div class="step-title">Calculate ΔNFA (Investment in Fixed Assets)</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">ΔNFA = NFA(1996) - NFA(1995)</div>
+                    <p><strong>Given:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>NFA(1995) = $388 (from balance sheet)</li>
+                        <li>NFA(1996) = $440 (you just calculated this!)</li>
+                    </ul>
+                    <p><strong>Note:</strong> This represents the investment (cash outflow) in fixed assets</p>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate ΔNFA for 1996 in thousands:</div>
+                    <div class="input-group">
+                        <label>ΔNFA ($000s):</label>
+                        <input type="number" id="q9-answer" placeholder="Enter change in NFA">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(9, 150)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(9)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-9">
+                        <strong>Hint:</strong> $440 - $388 = ?
+                    </div>
+                    <div class="feedback" id="feedback-9"></div>
+                </div>
+            </div>
+
+            <!-- Step 10: 1996 Accounts Receivable -->
+            <div class="step-container" id="step-10">
+                <div class="step-header">
+                    <div class="step-number">STEP 10 OF 16</div>
+                    <div class="step-title">Calculate 1996 Accounts Receivable</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">AR = (AR Days on Hand) × (Sales / 365)</div>
+                    <p><strong>Given:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>AR Days on Hand = 43.4 days</li>
+                        <li>1996 Sales = $5,500</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate 1996 Accounts Receivable in thousands:</div>
+                    <div class="input-group">
+                        <label>1996 AR ($000s):</label>
+                        <input type="number" id="q10-answer" placeholder="Enter AR">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(10, 150)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(10)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-10">
+                        <strong>Hint:</strong> 43.4 × ($5,500 / 365) = 43.4 × 15.07 ≈ ?
+                    </div>
+                    <div class="feedback" id="feedback-10"></div>
+                </div>
+            </div>
+
+            <!-- Step 11: 1996 Inventory -->
+            <div class="step-container" id="step-11">
+                <div class="step-header">
+                    <div class="step-number">STEP 11 OF 16</div>
+                    <div class="step-title">Calculate 1996 Inventory</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">Inventory = (Inventory Days on Hand) × (COGS / 365)</div>
+                    <p><strong>Given:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Inventory Days on Hand = 59.4 days</li>
+                        <li>1996 COGS = $4,125</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate 1996 Inventory in thousands:</div>
+                    <div class="input-group">
+                        <label>1996 Inventory ($000s):</label>
+                        <input type="number" id="q11-answer" placeholder="Enter Inventory">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(11, 150)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(11)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-11">
+                        <strong>Hint:</strong> 59.4 × ($4,125 / 365) = 59.4 × 11.30 ≈ ?
+                    </div>
+                    <div class="feedback" id="feedback-11"></div>
+                </div>
+            </div>
+
+            <!-- Step 12: 1996 Accounts Payable -->
+            <div class="step-container" id="step-12">
+                <div class="step-header">
+                    <div class="step-number">STEP 12 OF 16</div>
+                    <div class="step-title">Calculate 1996 Accounts Payable</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>First, calculate Purchases:</strong></p>
+                    <div class="formula-box">Purchases = ΔInventory + COGS<br>ΔInventory = Inventory(1996) - Inventory(1995)</div>
+                    <p><strong>Then calculate AP:</strong></p>
+                    <div class="formula-box">AP = (AP Days on Hand) × (Purchases / 365)</div>
+                    <p><strong>Given:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Inventory(1995) = $587</li>
+                        <li>Inventory(1996) = $671</li>
+                        <li>1996 COGS = $4,125</li>
+                        <li>AP Days on Hand = 10 days</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate 1996 Accounts Payable in thousands:</div>
+                    <div class="input-group">
+                        <label>1996 AP ($000s):</label>
+                        <input type="number" id="q12-answer" placeholder="Enter AP">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(12, 200)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(12)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-12">
+                        <strong>Hint:</strong> Purchases = ($671 - $587) + $4,125 = $4,209. Then AP = 10 × ($4,209 / 365) ≈ ?
+                    </div>
+                    <div class="feedback" id="feedback-12"></div>
+                </div>
+            </div>
+
+            <!-- Step 13: 1996 NOWC -->
+            <div class="step-container" id="step-13">
+                <div class="step-header">
+                    <div class="step-number">STEP 13 OF 16</div>
+                    <div class="step-title">Calculate 1996 NOWC (Net Operating Working Capital)</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">NOWC = AR + Inventory - AP - Accrued Expenses</div>
+                    <p><strong>Your calculations:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>1996 AR = $654</li>
+                        <li>1996 Inventory = $671</li>
+                        <li>1996 AP = $115</li>
+                        <li>1996 Accrued Expenses = $80 (given: Sales × 1.46% = $5,500 × 0.0146)</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate 1996 NOWC in thousands:</div>
+                    <div class="input-group">
+                        <label>1996 NOWC ($000s):</label>
+                        <input type="number" id="q13-answer" placeholder="Enter NOWC">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(13, 200)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(13)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-13">
+                        <strong>Hint:</strong> $654 + $671 - $115 - $80 = ?
+                    </div>
+                    <div class="feedback" id="feedback-13"></div>
+                </div>
+            </div>
+
+            <!-- Step 14: ΔNOWC -->
+            <div class="step-container" id="step-14">
+                <div class="step-header">
+                    <div class="step-number">STEP 14 OF 16</div>
+                    <div class="step-title">Calculate ΔNOWC (Investment in Working Capital)</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">ΔNOWC = NOWC(1996) - NOWC(1995)</div>
+                    <p><strong>Given:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>NOWC(1995) = $742</li>
+                        <li>NOWC(1996) = $1,130</li>
+                    </ul>
+                    <p><strong>Note:</strong> This represents the investment (cash outflow) in working capital</p>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate ΔNOWC for 1996 in thousands:</div>
+                    <div class="input-group">
+                        <label>ΔNOWC ($000s):</label>
+                        <input type="number" id="q14-answer" placeholder="Enter change in NOWC">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(14, 200)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(14)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-14">
+                        <strong>Hint:</strong> $1,130 - $742 = ?
+                    </div>
+                    <div class="feedback" id="feedback-14"></div>
+                </div>
+            </div>
+
+            <!-- Step 15: 1996 FCF -->
+            <div class="step-container" id="step-15">
+                <div class="step-header">
+                    <div class="step-number">STEP 15 OF 16</div>
+                    <div class="step-title">Calculate 1996 Free Cash Flow (FCF)</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula-box">FCF = NOP - ΔNFA - ΔNOWC</div>
+                    <p><strong>Your calculations:</strong></p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>1996 NOP = $164</li>
+                        <li>1996 ΔNFA = $52</li>
+                        <li>1996 ΔNOWC = $388</li>
+                    </ul>
+                    <p><strong>💡 Important insight:</strong> Negative FCF in early years is common during growth phases - the company is investing heavily!</p>
+                </div>
+                <div class="question">
+                    <div class="question-text">🧮 Calculate 1996 Free Cash Flow in thousands (can be negative!):</div>
+                    <div class="input-group">
+                        <label>1996 FCF ($000s):</label>
+                        <input type="number" id="q15-answer" placeholder="Enter FCF (use - for negative)">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(15, 250)">Submit Answer</button>
+                        <button class="btn-secondary" onclick="showHint(15)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-15">
+                        <strong>Hint:</strong> $164 - $52 - $388 = ? (Remember: investments reduce FCF, so subtract them!)
+                    </div>
+                    <div class="feedback" id="feedback-15"></div>
+                </div>
+            </div>
+
+            <!-- Step 16: Final Valuation Concept -->
+            <div class="step-container" id="step-16">
+                <div class="step-header">
+                    <div class="step-number">STEP 16 OF 16</div>
+                    <div class="step-title">Understanding the Complete Valuation</div>
+                </div>
+                <div class="instruction">
+                    <p><strong>🎯 Putting It All Together:</strong></p>
+                    <p>You've now mastered calculating Free Cash Flow for Year 1! In a complete valuation, you would:</p>
+                    <br>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Project FCF for all forecast years (1996-2000)</li>
+                        <li>Calculate PV of those FCFs (discounting at WACC = 11.5%)</li>
+                        <li>Calculate Terminal Value beyond 2000</li>
+                        <li>Sum to get Enterprise Value (EV)</li>
+                        <li>Add Non-Operating Assets and subtract Debt to get Market Value of Equity</li>
+                    </ol>
+                    <br>
+                    <p><strong>The complete formula:</strong></p>
+                    <div class="formula-box">
+                        Market Value of Equity = Enterprise Value + Non-Operating Assets - Debt<br>
+                        = $2,014 + $56 - $737 = $1,333
+                    </div>
+                </div>
+                <div class="question">
+                    <div class="question-text">🏆 Final Question: Based on the cookbook, what is the final Market Value of Equity in thousands?</div>
+                    <div class="input-group">
+                        <label>Market Value of Equity ($000s):</label>
+                        <input type="number" id="q16-answer" placeholder="Enter MV of Equity">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn-primary" onclick="checkAnswer(16, 300)">Submit Final Answer</button>
+                        <button class="btn-secondary" onclick="showHint(16)">💡 Need a Hint?</button>
+                    </div>
+                    <div class="hint" id="hint-16">
+                        <strong>Hint:</strong> Using the values from Steps 1 and 2: EV + Non-Op Assets - Debt = $2,014 + $56 - $737 = ?
+                    </div>
+                    <div class="feedback" id="feedback-16"></div>
+                </div>
+            </div>
+
+            <!-- Completion Screen -->
+            <div class="completion-screen" id="completion">
+                <div class="trophy">🏆</div>
+                <h1>Congratulations!</h1>
+                <h2>You've Completed the Clarkson Valuation Challenge!</h2>
+                <div class="final-score" id="final-cash">$0</div>
+                <p style="font-size: 1.2em; margin: 20px 0;">
+                    You've successfully worked through a complete DCF valuation process!
+                </p>
+                <div class="instruction" style="text-align: left; max-width: 600px; margin: 30px auto;">
+                    <h3>🎓 What You've Mastered:</h3>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>✅ Identifying non-operating assets and debt</li>
+                        <li>✅ Projecting sales, COGS, and operating expenses</li>
+                        <li>✅ Calculating EBIT and Net Operating Profit</li>
+                        <li>✅ Computing changes in fixed assets and working capital</li>
+                        <li>✅ Deriving Free Cash Flow</li>
+                        <li>✅ Understanding the DCF valuation framework</li>
+                    </ul>
+                    <br>
+                    <p><strong>💪 Keep practicing these skills!</strong> The more you work through valuations, the more intuitive they become.</p>
+                </div>
+                <button class="btn-primary" onclick="restartGame()">Play Again 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Answer key - obfuscated (base64 encoded)
+        const answerKey = 'NTY6NzM3OjU1MDA6NDEyNToxMTIyOjI1MzoxNjQ6NDQwOjUyOjY1NDo2NzE6MTE1OjExMzA6Mzg4Oi0yNzU6MTMzMw==';
+        
+        let currentStep = 0; // Start at 0, intro is step 0, questions start at step 1
+        let totalCash = 0;
+        let correctAnswers = 0;
+        let totalQuestions = 16;
+        let hintPenalty = 0.5;
+        let hintUsed = false;
+
+        // Decode answers
+        function getAnswers() {
+            const decoded = atob(answerKey);
+            return decoded.split(':').map(Number);
+        }
+
+        function nextStep() {
+            // Hide current step
+            if (currentStep === 0) {
+                const intro = document.getElementById('step-intro');
+                if (intro) intro.classList.remove('active');
+            } else {
+                const current = document.getElementById(`step-${currentStep}`);
+                if (current) current.classList.remove('active');
+            }
+
+            // Increment to next step
+            currentStep++;
+            
+            // Show next step
+            const next = document.getElementById(`step-${currentStep}`);
+            if (next) {
+                next.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                updateProgress();
+            }
+        }
+
+        function checkAnswer(stepNum, cashReward) {
+            const input = document.getElementById(`q${stepNum}-answer`);
+            const feedback = document.getElementById(`feedback-${stepNum}`);
+            const userAnswer = parseFloat(input.value);
+            
+            const answers = getAnswers();
+            const correctAnswer = answers[stepNum - 1];
+
+            const tolerance = Math.abs(correctAnswer * 0.01);
+            const isCorrect = Math.abs(userAnswer - correctAnswer) <= tolerance;
+
+            if (isCorrect) {
+                const earnedCash = hintUsed ? Math.round(cashReward * hintPenalty) : cashReward;
+                totalCash += earnedCash;
+                correctAnswers++;
+
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `
+                    ✅ Correct! You earned $${earnedCash}!<br>
+                    ${hintUsed ? '(Reward reduced by 50% for using hint)' : ''}
+                `;
+
+                document.getElementById('cash').textContent = `$${totalCash}`;
+                document.getElementById('step-count').textContent = `${correctAnswers}/${totalQuestions}`;
+                document.getElementById('accuracy').textContent = 
+                    `${Math.round((correctAnswers / (stepNum)) * 100)}%`;
+
+                input.disabled = true;
+                const submitBtn = document.querySelector(`#step-${stepNum} .btn-primary`);
+                submitBtn.disabled = true;
+                submitBtn.textContent = '✓ Completed';
+
+                setTimeout(() => {
+                    const buttonGroup = document.querySelector(`#step-${stepNum} .button-group`);
+                    const continueBtn = document.createElement('button');
+                    continueBtn.className = 'btn-primary';
+                    continueBtn.textContent = 'Continue to Next Step →';
+                    continueBtn.onclick = () => {
+                        if (stepNum === 16) {
+                            showCompletion();
+                        } else {
+                            nextStep();
+                            hintUsed = false;
+                        }
+                    };
+                    buttonGroup.innerHTML = '';
+                    buttonGroup.appendChild(continueBtn);
+                }, 1000);
+
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `
+                    ❌ Not quite. The correct answer is $${correctAnswer}.<br>
+                    Check your calculation and try to understand where you went wrong.
+                `;
+            }
+        }
+
+        function showHint(stepNum) {
+            const hint = document.getElementById(`hint-${stepNum}`);
+            hint.classList.add('show');
+            hintUsed = true;
+        }
+
+        function updateProgress() {
+            const progress = (correctAnswers / totalQuestions) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+        }
+
+        function showCompletion() {
+            document.getElementById('step-16').classList.remove('active');
+            const completion = document.getElementById('completion');
+            completion.classList.add('active');
+            document.getElementById('final-cash').textContent = `$${totalCash} Earned!`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartGame() {
+            location.reload();
+        }
+
+        updateProgress();
+    </script>
+</body>
+</html>
