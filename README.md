@@ -78,55 +78,7 @@ The game presents 16 sequential steps, each focusing on a specific calculation:
 
 ---
 
-## Course Integration
-
-### Recommended Use Cases
-
-**1. Supplementary Practice Tool**
-- Assign before or after covering the Clarkson case in class
-- Use as optional practice for students who want extra help
-- Recommend to students who are struggling with DCF concepts
-
-**2. Flipped Classroom**
-- Assign as pre-work before discussing the case
-- Use class time for higher-level analysis and discussion
-- Students come prepared with foundational mechanics mastered
-
-**3. Remedial Learning**
-- Identify students who struggled on DCF assignments
-- Assign as targeted practice with specific learning outcomes
-- Follow up with office hours for remaining questions
-
-**4. Assessment Preparation**
-- Students practice before quizzes or exams
-- Self-assessment tool to identify weak areas
-- Can be completed multiple times for additional practice
-
-### Not Recommended For
-
-- Graded assignments (answers can be found in source code)
-- High-stakes assessments
-- Replacement for working through the full case
-- Standalone learning without the case materials
-
----
-
-## Security Note
-
-**This is a client-side educational tool.** All answers are stored in the HTML/JavaScript code and can be viewed by students who inspect the source code. This is intentional - the game is designed as a **learning tool, not an assessment tool**.
-
-**Design Philosophy:** Students who choose to "cheat" by looking at the answers only hurt themselves. The real learning comes from working through the calculations. Students who need this tool typically use it honestly because they genuinely want to improve their understanding.
-
-For secure assessments, use Canvas quizzes, proctored exams, or other assessment-specific tools.
-
----
-
 ## Design Choices
-
-### Columbia Business School Branding
-- Colors: Columbia blue (#0055a5, #002b5c) with light accents
-- Professional, clean interface suitable for business school students
-- Mobile-responsive design (though best viewed on laptop/tablet)
 
 ### Pedagogical Features
 - **Sequential Steps:** Can't skip ahead - ensures mastery of prerequisites
@@ -138,18 +90,6 @@ For secure assessments, use Canvas quizzes, proctored exams, or other assessment
 ---
 
 ## Technical Details
-
-**Built With:**
-- Pure HTML5, CSS3, and vanilla JavaScript
-- No external dependencies or frameworks
-- Single-file application (~1,100 lines)
-- Works in all modern browsers (Chrome, Firefox, Safari, Edge)
-- Mobile-responsive (but desktop recommended for best experience)
-
-**Hosting:**
-- GitHub Pages (free static site hosting)
-- No server-side processing required
-- Zero maintenance costs
 
 **Browser Compatibility:**
 - Chrome 90+
@@ -176,19 +116,6 @@ For secure assessments, use Canvas quizzes, proctored exams, or other assessment
 - Work through calculations on paper first, then enter answer
 - If you get stuck, review the relevant section of the cookbook
 - Play through multiple times if needed - repetition builds mastery
-
-### For Instructors
-
-**Canvas Integration:**
-1. Upload to Canvas Files or link to the GitHub Pages URL
-2. Create a Page or Assignment with the link
-3. Add instructions emphasizing this is for practice, not assessment
-4. Recommend time commitment (30-45 minutes)
-5. Optional: Request completion screenshot for participation credit
-
-**Framing the Assignment:**
-> "This interactive game focuses on Year 1 Free Cash Flow calculations. It's designed to help you master the fundamental building blocks of DCF valuation. This is a learning tool - focus on understanding each step, not just getting a high score. The skills you practice here will serve as the foundation for completing the full Clarkson case and all future DCF valuations."
-
 ---
 
 ## Updates and Maintenance
