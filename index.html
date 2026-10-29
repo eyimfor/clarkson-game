@@ -371,7 +371,7 @@
                     <br>
                     <h3>⏭️ Beyond This Game:</h3>
                     <p style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
-                        <strong>Note:</strong> A complete DCF valuation requires projecting FCF for years 1997-2000, discounting all cash flows, and calculating terminal value. This game focuses on <strong>deeply understanding Year 1</strong> - once you master these mechanics, you can apply them to subsequent years.
+                        <strong>Note:</strong> A complete DCF valuation requires projecting FCF for years 1997-2000, discounting all cash flows, and estimating the residual value. This game focuses on <strong>deeply understanding Year 1</strong> - once you master these mechanics, you can apply them to subsequent years.
                     </p>
                     <br>
                     <h3>💰 How to Play:</h3>
@@ -379,6 +379,8 @@
                         <li>Complete 16 steps in order</li>
                         <li>Answer questions correctly to earn cash rewards</li>
                         <li>Get hints if you're stuck (but they reduce your reward by 50%)</li>
+                        <li>After a wrong answer you'll learn if you're too high or too low; the answer appears after 3 tries</li>
+                        <li>Type numbers as you like: 1,130 or $1,130 or (275) for a negative all work. Press Enter to submit</li>
                         <li>Take your time - understanding each step matters!</li>
                     </ul>
                 </div>
@@ -402,7 +404,7 @@
                     <div class="question-text">💵 What is the value of Non-Operating Assets in thousands?</div>
                     <div class="input-group">
                         <label>Non-Operating Assets ($000s):</label>
-                        <input type="number" id="q1-answer" placeholder="Enter amount">
+                        <input type="text" inputmode="decimal" id="q1-answer" placeholder="Enter amount">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(1, 100)">Submit Answer</button>
@@ -440,7 +442,7 @@
                     <div class="question-text">📊 What is the Total Debt in thousands?</div>
                     <div class="input-group">
                         <label>Total Debt ($000s):</label>
-                        <input type="number" id="q2-answer" placeholder="Enter total debt">
+                        <input type="text" inputmode="decimal" id="q2-answer" placeholder="Enter total debt">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(2, 150)">Submit Answer</button>
@@ -467,7 +469,7 @@
                     <div class="question-text">📈 Confirm: What are the projected 1996 Sales in thousands?</div>
                     <div class="input-group">
                         <label>1996 Sales ($000s):</label>
-                        <input type="number" id="q3-answer" placeholder="Enter sales">
+                        <input type="text" inputmode="decimal" id="q3-answer" placeholder="Enter sales">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(3, 50)">Submit Answer</button>
@@ -499,7 +501,7 @@
                     <div class="question-text">🧮 Calculate 1996 COGS in thousands:</div>
                     <div class="input-group">
                         <label>1996 COGS ($000s):</label>
-                        <input type="number" id="q4-answer" placeholder="Enter COGS">
+                        <input type="text" inputmode="decimal" id="q4-answer" placeholder="Enter COGS">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(4, 100)">Submit Answer</button>
@@ -531,7 +533,7 @@
                     <div class="question-text">🧮 Calculate 1996 Operating Expenses in thousands:</div>
                     <div class="input-group">
                         <label>1996 Operating Expenses ($000s):</label>
-                        <input type="number" id="q5-answer" placeholder="Enter Op Exp">
+                        <input type="text" inputmode="decimal" id="q5-answer" placeholder="Enter Op Exp">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(5, 100)">Submit Answer</button>
@@ -564,7 +566,7 @@
                     <div class="question-text">🧮 Calculate 1996 EBIT in thousands:</div>
                     <div class="input-group">
                         <label>1996 EBIT ($000s):</label>
-                        <input type="number" id="q6-answer" placeholder="Enter EBIT">
+                        <input type="text" inputmode="decimal" id="q6-answer" placeholder="Enter EBIT">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(6, 150)">Submit Answer</button>
@@ -585,7 +587,7 @@
                 </div>
                 <div class="instruction">
                     <p><strong>Formula:</strong></p>
-                    <div class="formula-box">NOP = EBIT - Tax on EBIT<br>Tax on EBIT = EBIT × Tax Rate</div>
+                    <div class="formula-box">NOP = EBIT - Tax on EBIT<br>Tax on EBIT = EBIT × Tax Rate<br>(NOP taxes EBIT as if the firm had no debt)</div>
                     <p><strong>Given:</strong></p>
                     <ul style="margin-left: 20px; line-height: 1.8;">
                         <li>1996 EBIT = $253</li>
@@ -596,14 +598,14 @@
                     <div class="question-text">🧮 Calculate 1996 NOP (Net Operating Profit) in thousands:</div>
                     <div class="input-group">
                         <label>1996 NOP ($000s):</label>
-                        <input type="number" id="q7-answer" placeholder="Enter NOP">
+                        <input type="text" inputmode="decimal" id="q7-answer" placeholder="Enter NOP">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(7, 150)">Submit Answer</button>
                         <button class="btn-secondary" onclick="showHint(7)">💡 Need a Hint?</button>
                     </div>
                     <div class="hint" id="hint-7">
-                        <strong>Hint:</strong> First calculate Tax: $253 × 0.35 = $89. Then: NOP = $253 - $89 = ?
+                        <strong>Hint:</strong> First calculate Tax: $253 × 0.35 = $88.55. Then: NOP = $253 - $88.55 = ? (round to the nearest thousand)
                     </div>
                     <div class="feedback" id="feedback-7"></div>
                 </div>
@@ -628,7 +630,7 @@
                     <div class="question-text">🧮 Calculate 1996 Net Fixed Assets in thousands:</div>
                     <div class="input-group">
                         <label>1996 NFA ($000s):</label>
-                        <input type="number" id="q8-answer" placeholder="Enter NFA">
+                        <input type="text" inputmode="decimal" id="q8-answer" placeholder="Enter NFA">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(8, 150)">Submit Answer</button>
@@ -661,7 +663,7 @@
                     <div class="question-text">🧮 Calculate ΔNFA for 1996 in thousands:</div>
                     <div class="input-group">
                         <label>ΔNFA ($000s):</label>
-                        <input type="number" id="q9-answer" placeholder="Enter change in NFA">
+                        <input type="text" inputmode="decimal" id="q9-answer" placeholder="Enter change in NFA">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(9, 150)">Submit Answer</button>
@@ -693,7 +695,7 @@
                     <div class="question-text">🧮 Calculate 1996 Accounts Receivable in thousands:</div>
                     <div class="input-group">
                         <label>1996 AR ($000s):</label>
-                        <input type="number" id="q10-answer" placeholder="Enter AR">
+                        <input type="text" inputmode="decimal" id="q10-answer" placeholder="Enter AR">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(10, 150)">Submit Answer</button>
@@ -725,7 +727,7 @@
                     <div class="question-text">🧮 Calculate 1996 Inventory in thousands:</div>
                     <div class="input-group">
                         <label>1996 Inventory ($000s):</label>
-                        <input type="number" id="q11-answer" placeholder="Enter Inventory">
+                        <input type="text" inputmode="decimal" id="q11-answer" placeholder="Enter Inventory">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(11, 150)">Submit Answer</button>
@@ -761,7 +763,7 @@
                     <div class="question-text">🧮 Calculate 1996 Accounts Payable in thousands:</div>
                     <div class="input-group">
                         <label>1996 AP ($000s):</label>
-                        <input type="number" id="q12-answer" placeholder="Enter AP">
+                        <input type="text" inputmode="decimal" id="q12-answer" placeholder="Enter AP">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(12, 200)">Submit Answer</button>
@@ -795,7 +797,7 @@
                     <div class="question-text">🧮 Calculate 1996 NOWC in thousands:</div>
                     <div class="input-group">
                         <label>1996 NOWC ($000s):</label>
-                        <input type="number" id="q13-answer" placeholder="Enter NOWC">
+                        <input type="text" inputmode="decimal" id="q13-answer" placeholder="Enter NOWC">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(13, 200)">Submit Answer</button>
@@ -828,7 +830,7 @@
                     <div class="question-text">🧮 Calculate ΔNOWC for 1996 in thousands:</div>
                     <div class="input-group">
                         <label>ΔNOWC ($000s):</label>
-                        <input type="number" id="q14-answer" placeholder="Enter change in NOWC">
+                        <input type="text" inputmode="decimal" id="q14-answer" placeholder="Enter change in NOWC">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(14, 200)">Submit Answer</button>
@@ -857,19 +859,20 @@
                         <li>1996 ΔNOWC = $388</li>
                     </ul>
                     <p><strong>💡 Important insight:</strong> Negative FCF in early years is common during growth phases - the company is investing heavily!</p>
+                    <p style="margin-top: 10px;"><strong>Rounding:</strong> with unrounded inputs, NOP = 164.45 and ΔNOWC = 387.65. Either the rounded or the unrounded inputs are accepted.</p>
                 </div>
                 <div class="question">
                     <div class="question-text">🧮 Calculate 1996 Free Cash Flow in thousands (can be negative!):</div>
                     <div class="input-group">
                         <label>1996 FCF ($000s):</label>
-                        <input type="number" id="q15-answer" placeholder="Enter FCF (use - for negative)">
+                        <input type="text" inputmode="decimal" id="q15-answer" placeholder="Enter FCF (use - for negative)">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(15, 250)">Submit Answer</button>
                         <button class="btn-secondary" onclick="showHint(15)">💡 Need a Hint?</button>
                     </div>
                     <div class="hint" id="hint-15">
-                        <strong>Hint:</strong> $164 - $52 - $388 = ? (Remember: investments reduce FCF, so subtract them!)
+                        <strong>Hint:</strong> $164.45 - $52 - $387.65 = ? (Rounded inputs give $164 - $52 - $388.) Remember: investments reduce FCF, so subtract them!
                     </div>
                     <div class="feedback" id="feedback-15"></div>
                 </div>
@@ -908,35 +911,39 @@
                         <br>
                         <p><strong>⏭️ NEXT STEPS IN A COMPLETE DCF:</strong></p>
                         <ol start="2" style="margin-left: 20px; line-height: 2;">
-                            <li><strong>Repeat for years 1997-2000:</strong> Use the same process you just learned to project FCF for each year using the growth rates and assumptions from the case</li>
-                            <li><strong>Discount all FCFs to present value:</strong> Use WACC of 11.5% to discount each year's FCF back to 1995</li>
-                            <li><strong>Calculate Terminal Value:</strong> Project FCF beyond 2000 and use the perpetuity formula: TV = FCF₂₀₀₁ / (WACC - g)</li>
-                            <li><strong>Discount Terminal Value:</strong> Bring the terminal value back to 1995</li>
-                            <li><strong>Sum to get Enterprise Value:</strong> EV = PV(FCF 1996-2000) + PV(Terminal Value)</li>
+                            <li><strong>Repeat for years 1997-2000:</strong> Use the same process you just learned to project FCF for each year using the ratios in the case</li>
+                            <li><strong>Discount all FCFs to present value:</strong> Use the case's discount rate of 11.5% to discount each year's FCF back to the end of 1995</li>
+                            <li><strong>Estimate the residual value (RV):</strong> After 2000, sales grow at a steady 5% a year, so use the growing perpetuity: RV₂₀₀₀ = FCF₂₀₀₁ / (r - g)</li>
+                            <li><strong>Discount the RV:</strong> Bring RV₂₀₀₀ back to the end of 1995</li>
+                            <li><strong>Sum to get Enterprise Value:</strong> EV = PV(FCF 1996-2000) + PV(RV)</li>
                             <li><strong>Calculate Market Value of Equity:</strong> MV Equity = EV + Non-Operating Assets - Debt</li>
                         </ol>
                     </div>
                     <br>
-                    
+
                     <div style="background: #e7f3ff; padding: 15px; border-radius: 8px; margin-top: 20px;">
-                        <p><strong>📘 From Your Cookbook:</strong></p>
-                        <p>The complete valuation yields: <strong>Market Value of Equity = $1,333</strong></p>
-                        <p style="margin-top: 10px;">Formula: MV Equity = EV + Non-Op Assets - Debt = $2,014 + $56 - $737 = $1,333</p>
+                        <p><strong>📘 Last link in the chain:</strong></p>
+                        <p>Once you have Clarkson's enterprise value from the roadmap above, the equity value uses your answers to Steps 1 and 2 of this game:</p>
+                        <p style="margin-top: 10px;" class="formula-box">MV Equity = EV + Non-Op Assets - Debt</p>
                     </div>
                 </div>
                 <div class="question">
-                    <div class="question-text">🏆 Final Check: Based on the cookbook, what is the final Market Value of Equity in thousands?</div>
-                    <p style="color: #6c757d; font-size: 0.95em; margin-top: 10px;"><em>(This comes from completing ALL the steps above, not just Year 1)</em></p>
+                    <div class="question-text">🏆 Final Check: Enter the enterprise value you computed for Clarkson, then the market value of equity it implies (both in thousands).</div>
+                    <p style="color: #6c757d; font-size: 0.95em; margin-top: 10px;"><em>(The game checks the step from EV to equity, not your EV itself. Your EV comes from completing ALL the steps above, not just Year 1.)</em></p>
+                    <div class="input-group">
+                        <label>Your Enterprise Value ($000s):</label>
+                        <input type="text" inputmode="decimal" id="q16-ev" placeholder="Enter your EV">
+                    </div>
                     <div class="input-group">
                         <label>Market Value of Equity ($000s):</label>
-                        <input type="number" id="q16-answer" placeholder="Enter MV of Equity">
+                        <input type="text" inputmode="decimal" id="q16-answer" placeholder="Enter MV of Equity">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(16, 300)">Submit Final Answer</button>
                         <button class="btn-secondary" onclick="showHint(16)">💡 Need a Hint?</button>
                     </div>
                     <div class="hint" id="hint-16">
-                        <strong>Hint:</strong> Check the formula box above - the cookbook shows the complete calculation using EV, Non-Op Assets, and Debt from Steps 1 and 2.
+                        <strong>Hint:</strong> Add the non-operating assets from Step 1 and subtract the debt from Step 2: your EV + $56 - $737 = ?
                     </div>
                     <div class="feedback" id="feedback-16"></div>
                 </div>
@@ -967,8 +974,8 @@
                     <p><strong>Now that you understand Year 1:</strong></p>
                     <ul style="margin-left: 20px; line-height: 2;">
                         <li>📊 Apply these same mechanics to years 1997-2000</li>
-                        <li>💰 Learn to discount cash flows using WACC</li>
-                        <li>♾️ Master terminal value calculations</li>
+                        <li>💰 Discount each year's FCF at the case's 11.5% rate</li>
+                        <li>♾️ Estimate the residual value with a growing perpetuity</li>
                         <li>🎯 Complete the full Clarkson case valuation</li>
                     </ul>
                     <br>
@@ -980,21 +987,49 @@
     </div>
 
     <script>
-        // Answer key - obfuscated (base64 encoded)
-        const answerKey = 'NTY6NzM3OjU1MDA6NDEyNToxMTIyOjI1MzoxNjQ6NDQwOjUyOjY1NDo2NzE6MTE1OjExMzA6Mzg4Oi0yNzU6MTMzMw==';
-        
+        // Answer key for Steps 1-15 - obfuscated (base64 encoded).
+        // Step 16 checks the student's own EV-to-equity step (EV + non-op assets - debt), so no final value is stored.
+        const answerKey = 'NTY6NzM3OjU1MDA6NDEyNToxMTIyOjI1MzoxNjQ6NDQwOjUyOjY1NDo2NzE6MTE1OjExMzA6Mzg4Oi0yNzU=';
+        const MAX_TRIES = 3;
+
         let currentStep = 0; // Start at 0, intro is step 0, questions start at step 1
         let totalCash = 0;
         let correctAnswers = 0;
+        let firstTryCorrect = 0;
         let totalQuestions = 16;
         let hintPenalty = 0.5;
         let hintUsed = false;
+        const tries = {};
 
         // Decode answers
         function getAnswers() {
             const decoded = atob(answerKey);
             return decoded.split(':').map(Number);
         }
+
+        // Accept 1,130 / $1,130 / -275 / (275) / 1130.5
+        function parseAmount(raw) {
+            if (raw === undefined || raw === null) return NaN;
+            let s = String(raw).trim().replace(/[$,\s]/g, '').replace(/[−–]/g, '-');
+            let negative = false;
+            if (/^\(.*\)$/.test(s)) { negative = true; s = s.slice(1, -1); }
+            if (s === '' || !/^-?\d*\.?\d+$/.test(s)) return NaN;
+            const n = parseFloat(s);
+            return negative ? -n : n;
+        }
+
+        function fmt(n) {
+            const r = Math.round(n);
+            return (r < 0 ? '-$' : '$') + Math.abs(r).toLocaleString('en-US');
+        }
+
+        // Press Enter in any answer box to submit that step
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' || !e.target.matches('input')) return;
+            const step = e.target.closest('.step-container');
+            const btn = step && step.querySelector('.button-group .btn-primary:not([disabled])');
+            if (btn) { e.preventDefault(); btn.click(); }
+        });
 
         function nextStep() {
             // Hide current step
@@ -1021,18 +1056,41 @@
         function checkAnswer(stepNum, cashReward) {
             const input = document.getElementById(`q${stepNum}-answer`);
             const feedback = document.getElementById(`feedback-${stepNum}`);
-            const userAnswer = parseFloat(input.value);
-            
-            const answers = getAnswers();
-            const correctAnswer = answers[stepNum - 1];
+            const userAnswer = parseAmount(input.value);
 
-            const tolerance = Math.abs(correctAnswer * 0.01);
+            let correctAnswer, tolerance, evInput = null;
+            if (stepNum === 16) {
+                // Check the bridge from the student's own EV: equity = EV + non-op assets - debt
+                evInput = document.getElementById('q16-ev');
+                const ev = parseAmount(evInput.value);
+                if (isNaN(ev)) {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = 'Enter the enterprise value you computed first.';
+                    return;
+                }
+                const answers = getAnswers();
+                correctAnswer = ev + answers[0] - answers[1];
+                tolerance = 1.5;
+            } else {
+                const answers = getAnswers();
+                correctAnswer = answers[stepNum - 1];
+                tolerance = Math.max(1, Math.abs(correctAnswer * 0.01));
+            }
+
+            if (isNaN(userAnswer)) {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = 'Enter a number, e.g. 1,130 or -275.';
+                return;
+            }
+
+            tries[stepNum] = (tries[stepNum] || 0) + 1;
             const isCorrect = Math.abs(userAnswer - correctAnswer) <= tolerance;
 
             if (isCorrect) {
                 const earnedCash = hintUsed ? Math.round(cashReward * hintPenalty) : cashReward;
                 totalCash += earnedCash;
                 correctAnswers++;
+                if (tries[stepNum] === 1) firstTryCorrect++;
 
                 feedback.className = 'feedback correct';
                 feedback.innerHTML = `
@@ -1042,9 +1100,11 @@
 
                 document.getElementById('cash').textContent = `$${totalCash}`;
                 document.getElementById('step-count').textContent = `${correctAnswers}/${totalQuestions}`;
-                document.getElementById('accuracy').textContent = 
-                    `${Math.round((correctAnswers / (stepNum)) * 100)}%`;
+                document.getElementById('accuracy').textContent =
+                    `${Math.round((firstTryCorrect / correctAnswers) * 100)}%`;
+                updateProgress();
 
+                if (evInput) evInput.disabled = true;
                 input.disabled = true;
                 const submitBtn = document.querySelector(`#step-${stepNum} .btn-primary`);
                 submitBtn.disabled = true;
@@ -1067,12 +1127,26 @@
                     buttonGroup.appendChild(continueBtn);
                 }, 1000);
 
+            } else if (stepNum === 16) {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `
+                    ❌ Not quite. Equity should equal your EV plus the non-operating assets from Step 1, minus the debt from Step 2.<br>
+                    With your EV that is ${fmt(correctAnswer)}.
+                `;
+            } else if (tries[stepNum] < MAX_TRIES) {
+                const left = MAX_TRIES - tries[stepNum];
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `
+                    ❌ Not quite: your answer is too ${userAnswer > correctAnswer ? 'high' : 'low'}.<br>
+                    Check your calculation and try again (${left} ${left === 1 ? 'try' : 'tries'} before the answer is shown).
+                `;
             } else {
                 feedback.className = 'feedback incorrect';
                 feedback.innerHTML = `
-                    ❌ Not quite. The correct answer is $${correctAnswer}.<br>
-                    Check your calculation and try to understand where you went wrong.
+                    ❌ Not quite. The answer is ${fmt(correctAnswer)}. Enter it to continue, and use the hint to see where it comes from.
                 `;
+                document.getElementById(`hint-${stepNum}`).classList.add('show');
+                hintUsed = true; // a revealed answer earns the same reduced reward as a hint
             }
         }
 

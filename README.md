@@ -27,8 +27,8 @@ This game focuses on **building the foundational skills** needed for DCF valuati
 This is intentionally scoped to Year 1 calculations only. A complete DCF valuation requires additional steps not included in this game:
 
 - Projecting FCF for subsequent years (1997-2000)
-- Discounting cash flows using WACC
-- Calculating terminal value using perpetuity formula
+- Discounting cash flows at the case's 11.5% discount rate
+- Estimating the residual value with the growing-perpetuity formula
 - Computing Enterprise Value
 - Final Market Value of Equity calculation
 
@@ -120,7 +120,15 @@ The game presents 16 sequential steps, each focusing on a specific calculation:
 
 ## Updates and Maintenance
 
-**Current Version:** 2.0 (Updated October 2025)
+**Current Version:** 2.1 (Updated October 2026)
+- Step 16 now checks the step from your own enterprise value to equity (EV + non-operating assets - debt) instead of printing a final answer; the old printed values (EV $2,014, equity $1,333) did not match the case solution
+- Step 15 hint and note show the unrounded FCF (164.45 - 52 - 387.65 = -275.2); rounded inputs are also accepted
+- Wrong answers now say "too high" or "too low"; the answer appears after 3 tries (with the hint, at the reduced reward)
+- Accuracy now counts answers that were right on the first try
+- Answer boxes accept 1,130, $1,130 and (275); press Enter to submit
+- Course terms: residual value and the case's discount rate instead of terminal value and WACC
+
+**Version 2.0** (October 2025)
 - Clarified Year 1 scope in introduction
 - Enhanced Step 16 with complete DCF roadmap
 - Updated completion screen with "next steps" guidance
@@ -131,7 +139,7 @@ The game presents 16 sequential steps, each focusing on a specific calculation:
 - Progress saving across sessions
 - Instructor analytics dashboard
 - Multi-year version covering 1997-2000
-- Terminal value calculation module
+- Residual value module
 
 ---
 
@@ -159,4 +167,4 @@ For questions or suggestions, please open an issue on GitHub.
 
 ---
 
-**Last Updated:** October 29, 2025
+**Last Updated:** October 29, 2026
