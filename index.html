@@ -413,6 +413,35 @@
             .presets .btn-tertiary { flex: 1 1 100%; }
             .kpi .v { font-size: 1.2em; }
         }
+
+        /* v2.2: progress tracker */
+        .tracker { background: #fff; border: 2px solid #b9d9eb; border-radius: 10px; margin-bottom: 24px; }
+        .tracker summary { cursor: pointer; padding: 14px 18px; font-weight: 700; color: #002b5c; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        .tracker summary::-webkit-details-marker { display: none; }
+        .tracker summary .done-count { font-weight: 600; color: #6c757d; font-size: 0.9em; }
+        .tracker-body { padding: 0 18px 18px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; }
+        .roadmap { font-size: 0.9em; border-collapse: collapse; width: 100%; }
+        .roadmap td { padding: 3px 6px; border-bottom: 1px solid #f1f3f5; vertical-align: baseline; }
+        .roadmap td.n { color: #adb5bd; width: 1.6em; text-align: right; }
+        .roadmap td.v { text-align: right; font-variant-numeric: tabular-nums; color: #adb5bd; width: 5.5em; }
+        .roadmap tr.done td { color: #212529; } .roadmap tr.done td.v { color: #002b5c; font-weight: 700; } .roadmap tr.done td.n { color: #1e7e34; }
+        .roadmap tr.now td { background: #fff3cd; } .roadmap tr.now td.n { color: #0055a5; }
+        .roadmap tr.group td { padding-top: 9px; color: #6c757d; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: none; }
+        .fcf-line { margin-top: 10px; padding: 10px 12px; background: #f8f9fa; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.95em; color: #495057; }
+        .fcf-line b { color: #002b5c; }
+        .mvbs h4 { color: #002b5c; font-size: 1em; margin-bottom: 8px; }
+        .mvbs-box { display: grid; grid-template-columns: 1fr 1fr; border: 2px solid #002b5c; border-radius: 8px; overflow: hidden; }
+        .mvbs-box .side { padding: 10px 12px; }
+        .mvbs-box .side + .side { border-left: 2px solid #002b5c; }
+        .mvbs-box .side h5 { font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.05em; color: #6c757d; margin-bottom: 8px; }
+        .mvbs-box .item { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px dashed #dee2e6; font-size: 0.92em; }
+        .mvbs-box .item:last-child { border-bottom: none; }
+        .mvbs-box .item .val { font-variant-numeric: tabular-nums; color: #adb5bd; }
+        .mvbs-box .item.done .val { color: #002b5c; font-weight: 700; }
+        .mvbs-box .item small { display: block; color: #6c757d; font-size: 0.82em; }
+        .mvbs-eq { margin-top: 10px; font-size: 0.9em; color: #495057; text-align: center; }
+        .mvbs-eq b { color: #002b5c; }
+        @media (max-width: 768px) { .tracker-body { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
@@ -474,6 +503,35 @@
                         </table>
                     </div>
                     <p class="exhibit-note" style="margin-top:12px;">Operating expenses include Mr. Clarkson's salary ($75, $80 and $85 thousand). Interest: bank notes at prime + 2.5% on the average balance; Holtz note 11%; term loan 10%, repayable $10 thousand semiannually.</p>
+                </div>
+            </details>
+
+            <!-- v2.2: progress tracker -->
+            <details class="tracker" id="tracker" open>
+                <summary><span>Where we are: the valuation so far</span><span class="done-count" id="done-count">0 of 16 steps</span></summary>
+                <div class="tracker-body">
+                    <div>
+                        <table class="roadmap"><tr class="group"><td colspan="3">Step 1: market value balance sheet inputs</td></tr><tr id="rm-1"><td class="n">1</td><td>Non-operating assets (cash, 1995)</td><td class="v" id="rm-v-1">&middot;</td></tr><tr id="rm-2"><td class="n">2</td><td>Interest-bearing debt (1995)</td><td class="v" id="rm-v-2">&middot;</td></tr><tr class="group"><td colspan="3">Step 2: 1996 free cash flow</td></tr><tr id="rm-3"><td class="n">3</td><td>Sales</td><td class="v" id="rm-v-3">&middot;</td></tr><tr id="rm-4"><td class="n">4</td><td>COGS</td><td class="v" id="rm-v-4">&middot;</td></tr><tr id="rm-5"><td class="n">5</td><td>Operating expenses</td><td class="v" id="rm-v-5">&middot;</td></tr><tr id="rm-6"><td class="n">6</td><td>EBIT</td><td class="v" id="rm-v-6">&middot;</td></tr><tr id="rm-7"><td class="n">7</td><td>NOP = EBIT &times; (1 &minus; t)</td><td class="v" id="rm-v-7">&middot;</td></tr><tr id="rm-8"><td class="n">8</td><td>Net fixed assets, 1996</td><td class="v" id="rm-v-8">&middot;</td></tr><tr id="rm-9"><td class="n">9</td><td>&Delta;NFA</td><td class="v" id="rm-v-9">&middot;</td></tr><tr id="rm-10"><td class="n">10</td><td>Accounts receivable</td><td class="v" id="rm-v-10">&middot;</td></tr><tr id="rm-11"><td class="n">11</td><td>Inventory</td><td class="v" id="rm-v-11">&middot;</td></tr><tr id="rm-12"><td class="n">12</td><td>Accounts payable</td><td class="v" id="rm-v-12">&middot;</td></tr><tr id="rm-13"><td class="n">13</td><td>NOWC</td><td class="v" id="rm-v-13">&middot;</td></tr><tr id="rm-14"><td class="n">14</td><td>&Delta;NOWC</td><td class="v" id="rm-v-14">&middot;</td></tr><tr id="rm-15"><td class="n">15</td><td>FCF = NOP &minus; &Delta;NFA &minus; &Delta;NOWC</td><td class="v" id="rm-v-15">&middot;</td></tr><tr class="group"><td colspan="3">Step 3: equity</td></tr><tr id="rm-16"><td class="n">16</td><td>Equity = EV + non-op assets &minus; debt</td><td class="v" id="rm-v-16">&middot;</td></tr></table>
+                        <div class="fcf-line" id="fcf-line">FCF<sub>1996</sub> = NOP &minus; &Delta;NFA &minus; &Delta;NOWC = &middot; &minus; &middot; &minus; &middot; = &middot;</div>
+                    </div>
+                    <div class="mvbs">
+                        <h4>Market value balance sheet, December 31, 1995 ($000s)</h4>
+                        <div class="mvbs-box">
+                            <div class="side">
+                                <h5>Assets</h5>
+                                <div class="item" id="mv-ev"><span>Enterprise value<small>PV of FCF 1996&ndash;2000 + PV of residual value</small></span><span class="val">&middot;</span></div>
+                                <div class="item" id="mv-nonop"><span>Non-operating assets<small>cash</small></span><span class="val">&middot;</span></div>
+                                <div class="item" id="mv-firm"><span><b>Value of the firm</b></span><span class="val">&middot;</span></div>
+                            </div>
+                            <div class="side">
+                                <h5>Claims</h5>
+                                <div class="item" id="mv-debt"><span>Debt<small>all interest-bearing liabilities</small></span><span class="val">&middot;</span></div>
+                                <div class="item" id="mv-equity"><span><b>Market value of equity</b><small>what Mr. Clarkson owns</small></span><span class="val">&middot;</span></div>
+                                <div class="item" id="mv-total"><span><b>Total claims</b></span><span class="val">&middot;</span></div>
+                            </div>
+                        </div>
+                        <div class="mvbs-eq">Equity = EV + non-operating assets &minus; debt<br><span id="mv-eq-line"></span></div>
+                    </div>
                 </div>
             </details>
             <!-- Introduction -->
@@ -1374,6 +1432,37 @@
             const panel = document.getElementById('exhibits');
             if (panel) panel.open = OPEN_EXHIBITS_AT.has(step);
         }
+
+        // ---------- v2.2: progress tracker ----------
+        const results = {};
+        const dot = '·';
+        function fmtv(n) { return (n < 0 ? '−' : '') + Math.round(Math.abs(n)).toLocaleString('en-US'); }
+        function trackerRecord(step, value, extra) {
+            results[step] = value;
+            if (extra !== undefined) results.ev = extra;
+            trackerUpdate();
+        }
+        function trackerUpdate() {
+            let done = 0;
+            for (let n = 1; n <= 16; n++) {
+                const tr = document.getElementById('rm-' + n), v = document.getElementById('rm-v-' + n);
+                if (!tr) continue;
+                tr.classList.toggle('now', n === currentStep && !(n in results));
+                if (n in results) { done++; tr.classList.add('done'); v.textContent = fmtv(results[n]); }
+            }
+            document.getElementById('done-count').textContent = `${done} of 16 steps`;
+            const nop = results[7], dnfa = results[9], dnowc = results[14], fcf = results[15];
+            const t = x => x === undefined ? dot : `<b>${fmtv(x)}</b>`;
+            document.getElementById('fcf-line').innerHTML = `FCF<sub>1996</sub> = NOP − ΔNFA − ΔNOWC = ${t(nop)} − ${t(dnfa)} − ${t(dnowc)} = ${t(fcf)}`;
+            const set = (id, val) => { const el = document.getElementById(id); el.classList.toggle('done', val !== undefined); el.querySelector('.val').textContent = val === undefined ? dot : fmtv(val); };
+            const nonop = results[1], debt = results[2], ev = results.ev, eq = results[16];
+            set('mv-nonop', nonop); set('mv-debt', debt); set('mv-ev', ev); set('mv-equity', eq);
+            set('mv-firm', (ev !== undefined && nonop !== undefined) ? ev + nonop : undefined);
+            set('mv-total', (eq !== undefined && debt !== undefined) ? eq + debt : undefined);
+            document.getElementById('mv-eq-line').innerHTML = (eq !== undefined)
+                ? `<b>${fmtv(eq)}</b> = ${fmtv(ev)} + ${fmtv(nonop)} − ${fmtv(debt)}`
+                : (nonop !== undefined || debt !== undefined) ? `Equity = EV + ${nonop === undefined ? dot : fmtv(nonop)} − ${debt === undefined ? dot : fmtv(debt)}; EV comes from the full DCF` : '';
+        }
         function nextStep() {
             // Hide current step
             if (currentStep === 0) {
@@ -1394,6 +1483,7 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 updateProgress();
                 highlightExhibits(currentStep);
+                trackerUpdate();
             }
         }
 
@@ -1435,6 +1525,7 @@
                 totalCash += earnedCash;
                 correctAnswers++;
                 if (tries[stepNum] === 1) firstTryCorrect++;
+                trackerRecord(stepNum, correctAnswer, stepNum === 16 ? parseAmount(evInput.value) : undefined);
 
                 feedback.className = 'feedback correct';
                 feedback.innerHTML = `
@@ -1584,6 +1675,7 @@
             const from = document.getElementById(fromId);
             if (from) from.classList.remove('active');
             document.getElementById('dashboard').classList.add('active');
+            const tr = document.getElementById('tracker'); if (tr) tr.open = false;
             window.scrollTo({ top: 0, behavior: 'smooth' });
             dashUpdate(true);
         }
