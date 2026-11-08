@@ -307,6 +307,69 @@
             font-weight: 600;
         }
 
+
+        /* v2.2: case exhibits panel and think-first boxes */
+        .exhibits {
+            background: #fff;
+            border: 2px solid #b9d9eb;
+            border-radius: 10px;
+            margin-bottom: 24px;
+        }
+        .exhibits summary {
+            cursor: pointer;
+            padding: 14px 18px;
+            font-weight: 700;
+            color: #002b5c;
+            list-style: none;
+        }
+        .exhibits summary::-webkit-details-marker { display: none; }
+        .exhibits summary::before { content: "+ "; color: #0055a5; }
+        .exhibits[open] summary::before { content: "\2212  "; }
+        .exhibits .exhibit-body { padding: 0 18px 18px; }
+        .exhibits .exhibit-note { color: #6c757d; font-size: 0.9em; margin: 6px 0 14px; }
+        .exhibit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .exhibit-table { width: 100%; border-collapse: collapse; font-size: 0.92em; }
+        .exhibit-table caption { text-align: left; font-weight: 700; color: #002b5c; padding: 6px 0; }
+        .exhibit-table th, .exhibit-table td { padding: 4px 6px; border-bottom: 1px solid #e9ecef; }
+        .exhibit-table th { text-align: right; color: #6c757d; font-weight: 600; }
+        .exhibit-table th:first-child { text-align: left; }
+        .exhibit-table td { text-align: right; font-variant-numeric: tabular-nums; }
+        .exhibit-table td:first-child { text-align: left; }
+        .exhibit-table tr.sub td:first-child { padding-left: 18px; color: #495057; }
+        .exhibit-table tr.total td { font-weight: 700; border-top: 1px solid #adb5bd; }
+        .exhibit-table tr.hl td { background: #fff3cd; font-weight: 700; }
+        .exhibit-table tr.hl td:first-child { border-left: 4px solid #ffc107; }
+        .find-it { color: #495057; font-size: 0.95em; margin-top: 10px; }
+        .think {
+            background: #eef6fb;
+            border: 1px solid #b9d9eb;
+            border-left: 4px solid #0055a5;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+        .think .think-label { font-size: 0.8em; letter-spacing: 0.08em; text-transform: uppercase; color: #0055a5; font-weight: 700; margin-bottom: 6px; }
+        .think .think-q { font-weight: 600; margin-bottom: 10px; }
+        .think .think-a { display: none; margin-top: 12px; color: #212529; }
+        .think .think-a.show { display: block; }
+        .think .think-a p { margin-bottom: 8px; }
+        .think .think-a table { border-collapse: collapse; margin: 8px 0 10px; font-size: 0.95em; }
+        .think .think-a th, .think .think-a td { padding: 3px 10px; border-bottom: 1px solid #cfe3ef; text-align: right; }
+        .think .think-a th:first-child, .think .think-a td:first-child { text-align: left; }
+        .btn-tertiary {
+            background: #fff;
+            color: #0055a5;
+            border: 2px solid #0055a5;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-tertiary:hover { background: #e7f3ff; }
+        @media (max-width: 768px) {
+            .exhibit-grid { grid-template-columns: 1fr; }
+        }
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
@@ -325,7 +388,7 @@
 <body>
     <div class="game-container">
         <div class="header">
-            <h1>🎯 Clarkson Valuation: Year 1 FCF Master</h1>
+            <h1>Clarkson Valuation: Year 1 FCF Master</h1>
             <div class="school-name">Columbia Business School</div>
             <div class="columbia-badge">Corporate Finance • DCF Fundamentals</div>
         </div>
@@ -350,41 +413,63 @@
         </div>
 
         <div class="content">
+            <!-- v2.2: case exhibits, always available -->
+            <details class="exhibits" id="exhibits">
+                <summary>Case exhibits: income statements and balance sheets, 1993-1995</summary>
+                <div class="exhibit-body">
+                    <p class="exhibit-note">Clarkson Lumber Company, Exhibits 1 and 2 (thousands of dollars). The row each step needs is highlighted. First-quarter 1996 figures are omitted; the assignment says to ignore them.</p>
+                    <div class="exhibit-grid">
+                        <table class="exhibit-table" id="exhibit-1">
+                            <caption>Exhibit 1. Operating results, years ending December 31</caption>
+                            <tr><th>$ thousands</th><th>1993</th><th>1994</th><th>1995</th></tr>
+                            <tr id="r-sales"><td>Net sales</td><td>2,921</td><td>3,477</td><td>4,519</td></tr><tr><td>Cost of goods sold:</td><td></td><td></td><td></td></tr><tr id="r-beginv" class="sub"><td>Beginning inventory</td><td>330</td><td>337</td><td>432</td></tr><tr id="r-purch" class="sub"><td>Purchases</td><td>2,209</td><td>2,729</td><td>3,579</td></tr><tr id="r-endinv" class="sub"><td>Ending inventory</td><td>337</td><td>432</td><td>587</td></tr><tr id="r-cogs" class="total"><td>Total cost of goods sold</td><td>2,202</td><td>2,634</td><td>3,424</td></tr><tr id="r-gp"><td>Gross profit</td><td>719</td><td>843</td><td>1,095</td></tr><tr id="r-opex"><td>Operating expenses</td><td>622</td><td>717</td><td>940</td></tr><tr id="r-ebit" class="total"><td>Earnings before interest and taxes</td><td>97</td><td>126</td><td>155</td></tr><tr id="r-int"><td>Interest expense</td><td>23</td><td>42</td><td>56</td></tr><tr id="r-ebt"><td>Net income before income taxes</td><td>74</td><td>84</td><td>99</td></tr><tr id="r-tax"><td>Provision for income taxes</td><td>14</td><td>16</td><td>22</td></tr><tr id="r-ni" class="total"><td>Net income</td><td>60</td><td>68</td><td>77</td></tr>
+                        </table>
+                        <table class="exhibit-table" id="exhibit-2">
+                            <caption>Exhibit 2. Balance sheets at December 31</caption>
+                            <tr><th>$ thousands</th><th>1993</th><th>1994</th><th>1995</th></tr>
+                            <tr id="r-cash"><td>Cash</td><td>43</td><td>52</td><td>56</td></tr><tr id="r-ar"><td>Accounts receivable, net</td><td>306</td><td>411</td><td>606</td></tr><tr id="r-inv"><td>Inventory</td><td>337</td><td>432</td><td>587</td></tr><tr id="r-ca" class="total"><td>Current assets</td><td>686</td><td>895</td><td>1,249</td></tr><tr id="r-ppe"><td>Property, net</td><td>233</td><td>262</td><td>388</td></tr><tr id="r-ta" class="total"><td>Total assets</td><td>919</td><td>1,157</td><td>1,637</td></tr><tr id="r-npbank"><td>Notes payable, bank</td><td>--</td><td>60</td><td>390</td></tr><tr id="r-holtzcur"><td>Note payable to Holtz, current portion</td><td>--</td><td>100</td><td>100</td></tr><tr id="r-nptrade"><td>Notes payable, trade</td><td>--</td><td>--</td><td>127</td></tr><tr id="r-ap"><td>Accounts payable</td><td>213</td><td>340</td><td>376</td></tr><tr id="r-accr"><td>Accrued expenses</td><td>42</td><td>45</td><td>75</td></tr><tr id="r-tlcur"><td>Term loan, current portion</td><td>20</td><td>20</td><td>20</td></tr><tr id="r-cl" class="total"><td>Current liabilities</td><td>275</td><td>565</td><td>1,088</td></tr><tr id="r-tl"><td>Term loan</td><td>140</td><td>120</td><td>100</td></tr><tr id="r-holtz"><td>Note payable, Mr. Holtz</td><td>--</td><td>100</td><td>0</td></tr><tr id="r-tlb" class="total"><td>Total liabilities</td><td>415</td><td>785</td><td>1,188</td></tr><tr id="r-nw"><td>Net worth</td><td>504</td><td>372</td><td>449</td></tr><tr id="r-tlnw" class="total"><td>Total liabilities and net worth</td><td>919</td><td>1,157</td><td>1,637</td></tr>
+                        </table>
+                    </div>
+                    <p class="exhibit-note" style="margin-top:12px;">Operating expenses include Mr. Clarkson's salary ($75, $80 and $85 thousand). Interest: bank notes at prime + 2.5% on the average balance; Holtz note 11%; term loan 10%, repayable $10 thousand semiannually.</p>
+                </div>
+            </details>
             <!-- Introduction -->
             <div class="step-container active" id="step-intro">
                 <div class="step-header">
-                    <div class="step-number">🚀 GET STARTED</div>
+                    <div class="step-number">GET STARTED</div>
                     <div class="step-title">Welcome to the Clarkson Valuation Challenge!</div>
                 </div>
                 <div class="instruction">
-                    <h3>📚 Your Mission:</h3>
+                    <h3>Your task</h3>
                     <p>You're a financial analyst tasked with valuing Clarkson Lumber Company. This interactive game focuses on mastering the <strong>fundamental building blocks of DCF valuation</strong> by calculating Year 1 (1996) Free Cash Flow in detail.</p>
                     <br>
-                    <h3>🎯 What This Game Covers:</h3>
+                    <h3>What this game covers</h3>
                     <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li><strong>✅ Year 1 (1996) FCF Calculation</strong> - Master every component</li>
-                        <li>✅ Non-operating assets and debt identification</li>
-                        <li>✅ Projecting revenues, COGS, operating expenses</li>
-                        <li>✅ Calculating EBIT, NOP, ΔNFA, and ΔNOWC</li>
-                        <li>✅ Understanding the complete FCF formula</li>
+                        <li><strong>Year 1 (1996) FCF calculation</strong>, every component</li>
+                        <li>Non-operating assets and debt identification</li>
+                        <li>Projecting revenues, COGS, operating expenses</li>
+                        <li>Calculating EBIT, NOP, ΔNFA, and ΔNOWC</li>
+                        <li>Understanding the complete FCF formula</li>
                     </ul>
                     <br>
-                    <h3>⏭️ Beyond This Game:</h3>
+                    <h3>Beyond this game</h3>
                     <p style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">
                         <strong>Note:</strong> A complete DCF valuation requires projecting FCF for years 1997-2000, discounting all cash flows, and estimating the residual value. This game focuses on <strong>deeply understanding Year 1</strong> - once you master these mechanics, you can apply them to subsequent years.
                     </p>
                     <br>
-                    <h3>💰 How to Play:</h3>
+                    <h3>How to play</h3>
                     <ul style="margin-left: 20px; line-height: 1.8;">
                         <li>Complete 16 steps in order</li>
                         <li>Answer questions correctly to earn cash rewards</li>
                         <li>Get hints if you're stuck (but they reduce your reward by 50%)</li>
                         <li>After a wrong answer you'll learn if you're too high or too low; the answer appears after 3 tries</li>
                         <li>Type numbers as you like: 1,130 or $1,130 or (275) for a negative all work. Press Enter to submit</li>
-                        <li>Take your time - understanding each step matters!</li>
+                        <li>The case exhibits (income statements and balance sheets for 1993-1995) are one click away at the top of every step, with the row you need highlighted</li>
+                        <li>"Think first" boxes at four steps ask why an assumption takes the value it does. They are not graded. They are the part that matters most</li>
+                        <li>Take your time. Understanding each step matters</li>
                     </ul>
                 </div>
-                <button class="btn-primary" onclick="nextStep()">Start the Challenge! 💪</button>
+                <button class="btn-primary" onclick="nextStep()">Start</button>
             </div>
 
             <!-- Step 1: Non-Operating Assets -->
@@ -398,17 +483,18 @@
                     <p>These assets add value but don't generate operating cash flows.</p>
                     <br>
                     <p><strong>From the 1995 Balance Sheet:</strong></p>
-                    <p>Review the balance sheet and identify the non-operating assets (hint: look for cash)</p>
+                    <p>Review the balance sheet and identify the non-operating assets.</p>
+                    <p class="find-it">Find it: Exhibit 2, row "Cash", 1995 column (highlighted above).</p>
                 </div>
                 <div class="question">
-                    <div class="question-text">💵 What is the value of Non-Operating Assets in thousands?</div>
+                    <div class="question-text">What is the value of Non-Operating Assets in thousands?</div>
                     <div class="input-group">
                         <label>Non-Operating Assets ($000s):</label>
                         <input type="text" inputmode="decimal" id="q1-answer" placeholder="Enter amount">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(1, 100)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(1)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(1)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-1">
                         <strong>Hint:</strong> Look for "Cash" on the 1995 Balance Sheet. This is the primary non-operating asset.
@@ -436,17 +522,18 @@
                         <li>Note payable, Mr. Holtz: $0</li>
                     </ul>
                     <br>
-                    <p><strong>⚠️ Key point:</strong> Do NOT include Accounts Payable or Accrued Expenses (these are operating liabilities, not debt)</p>
+                    <p><strong>Key point:</strong> Do not include accounts payable or accrued expenses. They are operating liabilities, not debt.</p>
+                    <p class="find-it">Find it: Exhibit 2, the six highlighted liability rows, 1995 column.</p>
                 </div>
                 <div class="question">
-                    <div class="question-text">📊 What is the Total Debt in thousands?</div>
+                    <div class="question-text">What is the Total Debt in thousands?</div>
                     <div class="input-group">
                         <label>Total Debt ($000s):</label>
                         <input type="text" inputmode="decimal" id="q2-answer" placeholder="Enter total debt">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(2, 150)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(2)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(2)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-2">
                         <strong>Hint:</strong> Add up all 6 items listed above: $390 + $100 + $127 + $20 + $100 + $0 = ?
@@ -463,17 +550,29 @@
                 </div>
                 <div class="instruction">
                     <p>Now we begin projecting Free Cash Flows. First, we need to project sales.</p>
-                    <p><strong>Given:</strong> 1996 Sales = $5,500 (this is provided in the case)</p>
+                    <p><strong>Given:</strong> 1996 Sales = $5,500 (provided in the case)</p>
+                </div>
+                <div class="think">
+                    <div class="think-label">Think first</div>
+                    <div class="think-q">Where does the 5,500 come from, and is it reasonable?</div>
+                    <button class="btn-tertiary" onclick="toggleThink(this)">Show the discussion</button>
+                    <div class="think-a"><p>It is a quote, not a calculation. The bank's credit investigator reports that "sales are expected to reach $5.5 million in 1996 and may exceed this level if prices of lumber should rise substantially." The 21.7% growth rate in the assumptions table is backed out from 5,500 / 4,519, not the other way round.</p>
+<table><tr><th>Basis</th><th>Implied 1996 sales</th><th>Growth</th></tr>
+<tr><td>Repeat 1995 growth</td><td>5,875</td><td>30.0%</td></tr>
+<tr><td>Three-year average growth</td><td>5,626</td><td>24.5%</td></tr>
+<tr><td>Bank's expectation (case)</td><td>5,500</td><td>21.7%</td></tr>
+<tr><td>First quarter 1996, scaled by Q1's usual 20% share of the year</td><td>5,315</td><td>17.6%</td></tr></table>
+<p>Growth was 19%, then 30%, then 17.6% in the latest quarter. The bank's number needs the rest of 1996 to run at about 23%. Slightly optimistic, not unreasonable. It matters less than you might think: moving 1996 sales by 7% moves the valuation by about 3%, because later years are specified as growth rates off whatever 1996 is.</p></div>
                 </div>
                 <div class="question">
-                    <div class="question-text">📈 Confirm: What are the projected 1996 Sales in thousands?</div>
+                    <div class="question-text">Confirm: What are the projected 1996 Sales in thousands?</div>
                     <div class="input-group">
                         <label>1996 Sales ($000s):</label>
                         <input type="text" inputmode="decimal" id="q3-answer" placeholder="Enter sales">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(3, 50)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(3)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(3)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-3">
                         <strong>Hint:</strong> This is given directly in the case: $5,500
@@ -497,15 +596,23 @@
                         <li>COGS/Sales ratio = 75.0%</li>
                     </ul>
                 </div>
+                <div class="think">
+                    <div class="think-label">Think first</div>
+                    <div class="think-q">COGS/Sales was 75.4%, 75.8% and 75.8% in 1993-95. Why does the forecast use 75.0% in 1996 and 74.0% after?</div>
+                    <button class="btn-tertiary" onclick="toggleThink(this)">Show the discussion</button>
+                    <div class="think-a"><p>The new credit line lets Clarkson pay suppliers within 10 days and take the 2% trade discount. Purchases are about 79% of sales (3,579 / 4,519 in 1995), so 2% off purchases is worth 0.02 &times; 0.79 = 1.6 points of sales. The historical 75.6% less 1.6 points is 74.0%, the case figure from 1997 on. The 75.0% in 1996 is a partial year: the credit line arrives "in a few weeks."</p>
+<p>Notice that the margin ratios barely moved across the three years. For margins, "use 1995" and "use the average" give the same answer. That is not true of the working-capital ratios, as you will see at the receivables step.</p>
+<p>This ratio is also the one that matters most. One percentage point of COGS/Sales, held for every year, moves Clarkson's enterprise value by about a third. One point of the discount rate moves it by about a sixth.</p></div>
+                </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate 1996 COGS in thousands:</div>
+                    <div class="question-text">Calculate 1996 COGS in thousands:</div>
                     <div class="input-group">
                         <label>1996 COGS ($000s):</label>
                         <input type="text" inputmode="decimal" id="q4-answer" placeholder="Enter COGS">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(4, 100)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(4)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(4)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-4">
                         <strong>Hint:</strong> $5,500 × 75.0% = $5,500 × 0.75 = ?
@@ -530,14 +637,14 @@
                     </ul>
                 </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate 1996 Operating Expenses in thousands:</div>
+                    <div class="question-text">Calculate 1996 Operating Expenses in thousands:</div>
                     <div class="input-group">
                         <label>1996 Operating Expenses ($000s):</label>
                         <input type="text" inputmode="decimal" id="q5-answer" placeholder="Enter Op Exp">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(5, 100)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(5)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(5)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-5">
                         <strong>Hint:</strong> $5,500 × 20.4% = $5,500 × 0.204 = ?
@@ -563,14 +670,14 @@
                     </ul>
                 </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate 1996 EBIT in thousands:</div>
+                    <div class="question-text">Calculate 1996 EBIT in thousands:</div>
                     <div class="input-group">
                         <label>1996 EBIT ($000s):</label>
                         <input type="text" inputmode="decimal" id="q6-answer" placeholder="Enter EBIT">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(6, 150)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(6)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(6)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-6">
                         <strong>Hint:</strong> $5,500 - $4,125 - $1,122 = ?
@@ -595,14 +702,14 @@
                     </ul>
                 </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate 1996 NOP (Net Operating Profit) in thousands:</div>
+                    <div class="question-text">Calculate 1996 NOP (Net Operating Profit) in thousands:</div>
                     <div class="input-group">
                         <label>1996 NOP ($000s):</label>
                         <input type="text" inputmode="decimal" id="q7-answer" placeholder="Enter NOP">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(7, 150)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(7)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(7)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-7">
                         <strong>Hint:</strong> First calculate Tax: $253 × 0.35 = $88.55. Then: NOP = $253 - $88.55 = ? (round to the nearest thousand)
@@ -627,14 +734,14 @@
                     </ul>
                 </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate 1996 Net Fixed Assets in thousands:</div>
+                    <div class="question-text">Calculate 1996 Net Fixed Assets in thousands:</div>
                     <div class="input-group">
                         <label>1996 NFA ($000s):</label>
                         <input type="text" inputmode="decimal" id="q8-answer" placeholder="Enter NFA">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(8, 150)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(8)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(8)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-8">
                         <strong>Hint:</strong> $5,500 / 12.5 = ?
@@ -654,20 +761,20 @@
                     <div class="formula-box">ΔNFA = NFA(1996) - NFA(1995)</div>
                     <p><strong>Given:</strong></p>
                     <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li>NFA(1995) = $388 (from balance sheet)</li>
+                        <li>NFA(1995) = $388 (Exhibit 2, "Property, net", 1995)</li>
                         <li>NFA(1996) = $440 (you just calculated this!)</li>
                     </ul>
                     <p><strong>Note:</strong> This represents the investment (cash outflow) in fixed assets</p>
                 </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate ΔNFA for 1996 in thousands:</div>
+                    <div class="question-text">Calculate ΔNFA for 1996 in thousands:</div>
                     <div class="input-group">
                         <label>ΔNFA ($000s):</label>
                         <input type="text" inputmode="decimal" id="q9-answer" placeholder="Enter change in NFA">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(9, 150)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(9)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(9)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-9">
                         <strong>Hint:</strong> $440 - $388 = ?
@@ -691,15 +798,25 @@
                         <li>1996 Sales = $5,500</li>
                     </ul>
                 </div>
+                <div class="think">
+                    <div class="think-label">Think first</div>
+                    <div class="think-q">AR days were 48.9 in 1995. The case uses 43.4, the 1993-95 average. Which would you use?</div>
+                    <button class="btn-tertiary" onclick="toggleThink(this)">Show the discussion</button>
+                    <div class="think-a"><table><tr><th></th><th>1993</th><th>1994</th><th>1995</th><th>Average</th></tr>
+<tr><td>AR days (AR / daily sales)</td><td>38.2</td><td>43.1</td><td>48.9</td><td>43.4</td></tr></table>
+<p><strong>The case for 48.9:</strong> it is the most recent number and reflects how the business is run today. If collection periods are genuinely drifting up, the average is biased low and gets more wrong every year.</p>
+<p><strong>The case for 43.4:</strong> one year is noisy, and 1995 was unusual (the Holtz buyout drained cash). More important, days on hand divides a year-end balance by a full-year flow. A firm growing 30% a year has December sales running about 14% above its annual average, so year-end receivables look long even when customers pay exactly as before. Measured against the December run rate, 1995 AR days are about 42.9, essentially the average.</p>
+<p>The choice is not cosmetic. Using 1995's working-capital ratios instead of the averages lowers Clarkson's equity value by roughly a fifth, because every extra day of receivables and inventory is cash tied up permanently in a growing business.</p></div>
+                </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate 1996 Accounts Receivable in thousands:</div>
+                    <div class="question-text">Calculate 1996 Accounts Receivable in thousands:</div>
                     <div class="input-group">
                         <label>1996 AR ($000s):</label>
                         <input type="text" inputmode="decimal" id="q10-answer" placeholder="Enter AR">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(10, 150)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(10)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(10)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-10">
                         <strong>Hint:</strong> 43.4 × ($5,500 / 365) = 43.4 × 15.07 ≈ ?
@@ -724,14 +841,14 @@
                     </ul>
                 </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate 1996 Inventory in thousands:</div>
+                    <div class="question-text">Calculate 1996 Inventory in thousands:</div>
                     <div class="input-group">
                         <label>1996 Inventory ($000s):</label>
                         <input type="text" inputmode="decimal" id="q11-answer" placeholder="Enter Inventory">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(11, 150)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(11)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(11)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-11">
                         <strong>Hint:</strong> 59.4 × ($4,125 / 365) = 59.4 × 11.30 ≈ ?
@@ -753,21 +870,30 @@
                     <div class="formula-box">AP = (AP Days on Hand) × (Purchases / 365)</div>
                     <p><strong>Given:</strong></p>
                     <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li>Inventory(1995) = $587</li>
+                        <li>Inventory(1995) = $587 (Exhibit 2, "Inventory", 1995)</li>
                         <li>Inventory(1996) = $671</li>
                         <li>1996 COGS = $4,125</li>
                         <li>AP Days on Hand = 10 days</li>
                     </ul>
                 </div>
+                <div class="think">
+                    <div class="think-label">Think first</div>
+                    <div class="think-q">Historical AP days were 35, 46 and 38 (average 39.7). Why does the forecast throw that history away and use 10?</div>
+                    <button class="btn-tertiary" onclick="toggleThink(this)">Show the discussion</button>
+                    <div class="think-a"><p>Because the policy changes. Suppliers offer 2/10 net 30: a 2% discount for paying within 10 days, otherwise the full amount in 30. Clarkson has been paying at 40 to 45 days because he had no cash to do otherwise. The Northrup credit line lets him pay in 10 days and take the discount, so the forecast uses 10. History is where a forecast starts; when you know something is about to change, you override it.</p>
+<p>Forgoing the discount is expensive borrowing from suppliers: giving up 2% to pay 20 days later costs (2 / 98) &times; (365 / 20), about 37% a year on the stated terms, or about 21% at the 45 days Clarkson actually takes. The bank lends at about 11%.</p>
+<p>Paying earlier costs cash up front. Moving AP from 45 to 10 days ties up roughly 400 in 1996, which is why 1996 free cash flow is so negative, and why the business cannot do this without the new loan.</p>
+<p>Also notice why AP is driven by purchases rather than COGS: suppliers are owed for what was bought. When inventory is growing, purchases exceed COGS (4,209 against 4,125 in 1996).</p></div>
+                </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate 1996 Accounts Payable in thousands:</div>
+                    <div class="question-text">Calculate 1996 Accounts Payable in thousands:</div>
                     <div class="input-group">
                         <label>1996 AP ($000s):</label>
                         <input type="text" inputmode="decimal" id="q12-answer" placeholder="Enter AP">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(12, 200)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(12)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(12)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-12">
                         <strong>Hint:</strong> Purchases = ($671 - $587) + $4,125 = $4,209. Then AP = 10 × ($4,209 / 365) ≈ ?
@@ -794,14 +920,14 @@
                     </ul>
                 </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate 1996 NOWC in thousands:</div>
+                    <div class="question-text">Calculate 1996 NOWC in thousands:</div>
                     <div class="input-group">
                         <label>1996 NOWC ($000s):</label>
                         <input type="text" inputmode="decimal" id="q13-answer" placeholder="Enter NOWC">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(13, 200)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(13)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(13)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-13">
                         <strong>Hint:</strong> $654 + $671 - $115 - $80 = ?
@@ -821,20 +947,20 @@
                     <div class="formula-box">ΔNOWC = NOWC(1996) - NOWC(1995)</div>
                     <p><strong>Given:</strong></p>
                     <ul style="margin-left: 20px; line-height: 1.8;">
-                        <li>NOWC(1995) = $742</li>
+                        <li>NOWC(1995) = $742 (Exhibit 2, 1995: 606 + 587 &minus; 376 &minus; 75)</li>
                         <li>NOWC(1996) = $1,130</li>
                     </ul>
                     <p><strong>Note:</strong> This represents the investment (cash outflow) in working capital</p>
                 </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate ΔNOWC for 1996 in thousands:</div>
+                    <div class="question-text">Calculate ΔNOWC for 1996 in thousands:</div>
                     <div class="input-group">
                         <label>ΔNOWC ($000s):</label>
                         <input type="text" inputmode="decimal" id="q14-answer" placeholder="Enter change in NOWC">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(14, 200)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(14)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(14)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-14">
                         <strong>Hint:</strong> $1,130 - $742 = ?
@@ -858,18 +984,18 @@
                         <li>1996 ΔNFA = $52</li>
                         <li>1996 ΔNOWC = $388</li>
                     </ul>
-                    <p><strong>💡 Important insight:</strong> Negative FCF in early years is common during growth phases - the company is investing heavily!</p>
+                    <p><strong>Important:</strong> Negative FCF in early years is common during growth phases - the company is investing heavily!</p>
                     <p style="margin-top: 10px;"><strong>Rounding:</strong> with unrounded inputs, NOP = 164.45 and ΔNOWC = 387.65. Either the rounded or the unrounded inputs are accepted.</p>
                 </div>
                 <div class="question">
-                    <div class="question-text">🧮 Calculate 1996 Free Cash Flow in thousands (can be negative!):</div>
+                    <div class="question-text">Calculate 1996 Free Cash Flow in thousands (can be negative!):</div>
                     <div class="input-group">
                         <label>1996 FCF ($000s):</label>
                         <input type="text" inputmode="decimal" id="q15-answer" placeholder="Enter FCF (use - for negative)">
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(15, 250)">Submit Answer</button>
-                        <button class="btn-secondary" onclick="showHint(15)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(15)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-15">
                         <strong>Hint:</strong> $164.45 - $52 - $387.65 = ? (Rounded inputs give $164 - $52 - $388.) Remember: investments reduce FCF, so subtract them!
@@ -885,11 +1011,11 @@
                     <div class="step-title">Understanding What You've Mastered</div>
                 </div>
                 <div class="instruction">
-                    <h3>🎓 What You Just Accomplished:</h3>
+                    <h3>What you just did</h3>
                     <p><strong>You calculated the complete 1996 Free Cash Flow!</strong></p>
                     <br>
                     <div style="background: #d4edda; padding: 20px; border-radius: 10px; border-left: 4px solid #28a745; margin-bottom: 20px;">
-                        <h4 style="margin-bottom: 10px;">✅ Your 1996 FCF Calculation:</h4>
+                        <h4 style="margin-bottom: 10px;">Your 1996 FCF calculation</h4>
                         <ul style="margin-left: 20px; line-height: 1.8;">
                             <li>Net Operating Profit (NOP): $164</li>
                             <li>Investment in Fixed Assets (ΔNFA): $52</li>
@@ -899,17 +1025,17 @@
                         <p style="margin-top: 15px;"><em>Negative FCF is normal for growing companies - they're investing heavily in assets and working capital!</em></p>
                     </div>
 
-                    <h3>⏭️ The Complete DCF Valuation Journey:</h3>
+                    <h3>The complete DCF valuation</h3>
                     <p>What you've mastered is <strong>Step 1</strong> of the complete DCF process. Here's the full roadmap:</p>
                     <br>
                     
                     <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 4px solid #0055a5;">
-                        <p><strong>✅ WHAT YOU COMPLETED:</strong></p>
+                        <p><strong>What you completed</strong></p>
                         <ol style="margin-left: 20px; line-height: 2;">
-                            <li><strong>Project 1996 Free Cash Flow</strong> (All components: Sales → COGS → OpEx → EBIT → NOP → ΔNFA → ΔNOWC → FCF)</li>
+                            <li><strong>Project 1996 Free Cash Flow</strong> (All components: Sales, COGS, OpEx, EBIT, NOP, ΔNFA, ΔNOWC, FCF)</li>
                         </ol>
                         <br>
-                        <p><strong>⏭️ NEXT STEPS IN A COMPLETE DCF:</strong></p>
+                        <p><strong>Next steps in a complete DCF</strong></p>
                         <ol start="2" style="margin-left: 20px; line-height: 2;">
                             <li><strong>Repeat for years 1997-2000:</strong> Use the same process you just learned to project FCF for each year using the ratios in the case</li>
                             <li><strong>Discount all FCFs to present value:</strong> Use the case's discount rate of 11.5% to discount each year's FCF back to the end of 1995</li>
@@ -922,13 +1048,13 @@
                     <br>
 
                     <div style="background: #e7f3ff; padding: 15px; border-radius: 8px; margin-top: 20px;">
-                        <p><strong>📘 Last link in the chain:</strong></p>
+                        <p><strong>Last link in the chain</strong></p>
                         <p>Once you have Clarkson's enterprise value from the roadmap above, the equity value uses your answers to Steps 1 and 2 of this game:</p>
                         <p style="margin-top: 10px;" class="formula-box">MV Equity = EV + Non-Op Assets - Debt</p>
                     </div>
                 </div>
                 <div class="question">
-                    <div class="question-text">🏆 Final Check: Enter the enterprise value you computed for Clarkson, then the market value of equity it implies (both in thousands).</div>
+                    <div class="question-text">Final check: Enter the enterprise value you computed for Clarkson, then the market value of equity it implies (both in thousands).</div>
                     <p style="color: #6c757d; font-size: 0.95em; margin-top: 10px;"><em>(The game checks the step from EV to equity, not your EV itself. Your EV comes from completing ALL the steps above, not just Year 1.)</em></p>
                     <div class="input-group">
                         <label>Your Enterprise Value ($000s):</label>
@@ -940,7 +1066,7 @@
                     </div>
                     <div class="button-group">
                         <button class="btn-primary" onclick="checkAnswer(16, 300)">Submit Final Answer</button>
-                        <button class="btn-secondary" onclick="showHint(16)">💡 Need a Hint?</button>
+                        <button class="btn-secondary" onclick="showHint(16)">Need a hint?</button>
                     </div>
                     <div class="hint" id="hint-16">
                         <strong>Hint:</strong> Add the non-operating assets from Step 1 and subtract the debt from Step 2: your EV + $56 - $737 = ?
@@ -951,37 +1077,49 @@
 
             <!-- Completion Screen -->
             <div class="completion-screen" id="completion">
-                <div class="trophy">🏆</div>
-                <h1>Congratulations!</h1>
+                                <h1>Congratulations!</h1>
                 <h2>You've Mastered Year 1 FCF Calculation!</h2>
                 <div class="final-score" id="final-cash">$0</div>
                 <p style="font-size: 1.2em; margin: 20px 0;">
                     You've successfully worked through every component of calculating Free Cash Flow for 1996!
                 </p>
                 <div class="instruction" style="text-align: left; max-width: 600px; margin: 30px auto;">
-                    <h3>🎓 What You've Mastered:</h3>
+                    <h3>What you practiced</h3>
                     <ul style="margin-left: 20px; line-height: 2;">
-                        <li>✅ Identifying non-operating assets and debt</li>
-                        <li>✅ Projecting sales, COGS, and operating expenses</li>
-                        <li>✅ Calculating EBIT and Net Operating Profit</li>
-                        <li>✅ Computing changes in fixed assets (ΔNFA)</li>
-                        <li>✅ Computing changes in working capital (ΔNOWC)</li>
-                        <li>✅ Deriving Free Cash Flow from all components</li>
-                        <li>✅ Understanding why FCF can be negative during growth</li>
+                        <li>Identifying non-operating assets and debt</li>
+                        <li>Projecting sales, COGS, and operating expenses</li>
+                        <li>Calculating EBIT and Net Operating Profit</li>
+                        <li>Computing changes in fixed assets (ΔNFA)</li>
+                        <li>Computing changes in working capital (ΔNOWC)</li>
+                        <li>Deriving Free Cash Flow from all components</li>
+                        <li>Understanding why FCF can be negative during growth</li>
                     </ul>
                     <br>
-                    <h3>⏭️ Your Next Steps:</h3>
+                    <h3>Your next steps</h3>
                     <p><strong>Now that you understand Year 1:</strong></p>
                     <ul style="margin-left: 20px; line-height: 2;">
-                        <li>📊 Apply these same mechanics to years 1997-2000</li>
-                        <li>💰 Discount each year's FCF at the case's 11.5% rate</li>
-                        <li>♾️ Estimate the residual value with a growing perpetuity</li>
-                        <li>🎯 Complete the full Clarkson case valuation</li>
+                        <li>Apply these same mechanics to years 1997-2000</li>
+                        <li>Discount each year's FCF at the case's 11.5% rate</li>
+                        <li>Estimate the residual value with a growing perpetuity</li>
+                        <li>Complete the full Clarkson case valuation</li>
                     </ul>
                     <br>
-                    <p><strong>💪 Keep building on this foundation!</strong> The skills you practiced here are the core of every DCF valuation you'll ever do.</p>
+                    <p><strong>Keep building on this foundation.</strong> The skills you practiced here are the core of every DCF valuation you'll ever do.</p>
+                    <br>
+                    <h3>What the ratios are worth</h3>
+                    <p>Once you complete the full valuation, try changing one assumption at a time and watch enterprise value. Roughly:</p>
+                    <table class="data-table" style="margin-top:10px;">
+                        <tr><th>One-notch change</th><th>Effect on enterprise value</th></tr>
+                        <tr><td>COGS/Sales up 1 percentage point, every year</td><td>about &minus;36%</td></tr>
+                        <tr><td>Operating expenses/Sales up 1 point, every year</td><td>about &minus;35%</td></tr>
+                        <tr><td>Discount rate 11.5% to 12.5%</td><td>about &minus;18%</td></tr>
+                        <tr><td>Terminal growth 5% to 4%</td><td>about &minus;6%</td></tr>
+                        <tr><td>Net fixed asset turnover 12.5 to 11.5</td><td>about &minus;4%</td></tr>
+                        <tr><td>AR days up 1 day</td><td>about &minus;1.5%</td></tr>
+                    </table>
+                    <p style="margin-top:10px;">The residual value is more than 100% of enterprise value (the 1996-2000 cash flows sum to a small negative present value), so the ratios that hold in 2000 are the valuation. Steady-state margins matter most; the discount rate matters about half as much; working-capital days matter least. Most people guess the opposite order.</p>
                 </div>
-                <button class="btn-primary" onclick="restartGame()">Practice Again 🔄</button>
+                <button class="btn-primary" onclick="restartGame()">Practice again</button>
             </div>
         </div>
     </div>
@@ -1031,6 +1169,38 @@
             if (btn) { e.preventDefault(); btn.click(); }
         });
 
+
+        // v2.2: think-first boxes and exhibit row highlighting
+        function toggleThink(btn) {
+            const box = btn.parentElement.querySelector('.think-a');
+            const open = box.classList.toggle('show');
+            btn.textContent = open ? 'Hide the discussion' : 'Show the discussion';
+        }
+        const EXHIBIT_ROWS = {
+            1: ['r-cash'],
+            2: ['r-npbank', 'r-holtzcur', 'r-nptrade', 'r-tlcur', 'r-tl', 'r-holtz'],
+            3: ['r-sales'],
+            4: ['r-sales', 'r-cogs'],
+            5: ['r-sales', 'r-opex'],
+            6: ['r-ebit'],
+            8: ['r-sales', 'r-ppe'],
+            9: ['r-ppe'],
+            10: ['r-ar', 'r-sales'],
+            11: ['r-inv', 'r-cogs'],
+            12: ['r-ap', 'r-purch', 'r-inv'],
+            13: ['r-ar', 'r-inv', 'r-ap', 'r-accr'],
+            14: ['r-ar', 'r-inv', 'r-ap', 'r-accr'],
+        };
+        const OPEN_EXHIBITS_AT = new Set([1, 2, 9, 12, 14]);
+        function highlightExhibits(step) {
+            document.querySelectorAll('.exhibit-table tr.hl').forEach(tr => tr.classList.remove('hl'));
+            (EXHIBIT_ROWS[step] || []).forEach(id => {
+                const tr = document.getElementById(id);
+                if (tr) tr.classList.add('hl');
+            });
+            const panel = document.getElementById('exhibits');
+            if (panel) panel.open = OPEN_EXHIBITS_AT.has(step);
+        }
         function nextStep() {
             // Hide current step
             if (currentStep === 0) {
@@ -1050,6 +1220,7 @@
                 next.classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 updateProgress();
+                highlightExhibits(currentStep);
             }
         }
 
@@ -1094,7 +1265,7 @@
 
                 feedback.className = 'feedback correct';
                 feedback.innerHTML = `
-                    ✅ Correct! You earned $${earnedCash}!<br>
+                    Correct. You earned $${earnedCash}.<br>
                     ${hintUsed ? '(Reward reduced by 50% for using hint)' : ''}
                 `;
 
@@ -1108,13 +1279,13 @@
                 input.disabled = true;
                 const submitBtn = document.querySelector(`#step-${stepNum} .btn-primary`);
                 submitBtn.disabled = true;
-                submitBtn.textContent = '✓ Completed';
+                submitBtn.textContent = 'Completed';
 
                 setTimeout(() => {
                     const buttonGroup = document.querySelector(`#step-${stepNum} .button-group`);
                     const continueBtn = document.createElement('button');
                     continueBtn.className = 'btn-primary';
-                    continueBtn.textContent = 'Continue to Next Step →';
+                    continueBtn.textContent = 'Continue to the next step';
                     continueBtn.onclick = () => {
                         if (stepNum === 16) {
                             showCompletion();
@@ -1130,20 +1301,20 @@
             } else if (stepNum === 16) {
                 feedback.className = 'feedback incorrect';
                 feedback.innerHTML = `
-                    ❌ Not quite. Equity should equal your EV plus the non-operating assets from Step 1, minus the debt from Step 2.<br>
+                    Not quite. Equity should equal your EV plus the non-operating assets from Step 1, minus the debt from Step 2.<br>
                     With your EV that is ${fmt(correctAnswer)}.
                 `;
             } else if (tries[stepNum] < MAX_TRIES) {
                 const left = MAX_TRIES - tries[stepNum];
                 feedback.className = 'feedback incorrect';
                 feedback.innerHTML = `
-                    ❌ Not quite: your answer is too ${userAnswer > correctAnswer ? 'high' : 'low'}.<br>
+                    Not quite: your answer is too ${userAnswer > correctAnswer ? 'high' : 'low'}.<br>
                     Check your calculation and try again (${left} ${left === 1 ? 'try' : 'tries'} before the answer is shown).
                 `;
             } else {
                 feedback.className = 'feedback incorrect';
                 feedback.innerHTML = `
-                    ❌ Not quite. The answer is ${fmt(correctAnswer)}. Enter it to continue, and use the hint to see where it comes from.
+                    Not quite. The answer is ${fmt(correctAnswer)}. Enter it to continue, and use the hint to see where it comes from.
                 `;
                 document.getElementById(`hint-${stepNum}`).classList.add('show');
                 hintUsed = true; // a revealed answer earns the same reduced reward as a hint

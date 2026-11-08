@@ -81,6 +81,7 @@ The game presents 16 sequential steps, each focusing on a specific calculation:
 ## Design Choices
 
 ### Pedagogical Features
+- **Judgment before arithmetic:** the exhibits panel and the think-first boxes make students locate each input in the statements and ask why a forecast ratio differs from history, which is where the valuation is actually decided
 - **Sequential Steps:** Can't skip ahead - ensures mastery of prerequisites
 - **Immediate Feedback:** Learn from mistakes right away
 - **Hint System:** Scaffolded support without giving away answers
@@ -120,7 +121,14 @@ The game presents 16 sequential steps, each focusing on a specific calculation:
 
 ## Updates and Maintenance
 
-**Current Version:** 2.1 (Updated October 2026)
+**Current Version:** 2.2 (Updated November 2026)
+- Case exhibits panel on every step: Exhibit 1 (income statements) and Exhibit 2 (balance sheets) for 1993-1995, with the rows the current step needs highlighted, so students can find the numbers in the statements instead of being handed them
+- "Think first" boxes at four steps (1996 sales, COGS/Sales, AR days, AP days) ask why the assumption takes the value it does and open a short discussion with the history: where the 5,500 comes from and what the first quarter of 1996 says; the 2% trade discount behind 75.6% to 74.0%; 48.9 versus 43.4 AR days and the growth distortion in year-end days-on-hand; 39.7 versus 10 AP days and the cost of forgoing the discount. Not graded
+- Completion screen adds "What the ratios are worth": one-notch sensitivities of enterprise value (margins about -36% per point, discount rate about -18%, AR about -1.5% per day) and the share of value in the residual, without printing EV or equity
+- "Find it" pointers to the exhibit rows for 1995 cash, debt, net fixed assets, inventory and NOWC
+- Decorative emoji removed throughout
+
+**Version 2.1** (October 2026)
 - Step 16 now checks the step from your own enterprise value to equity (EV + non-operating assets - debt) instead of printing a final answer; the old printed values (EV $2,014, equity $1,333) did not match the case solution
 - Step 15 hint and note show the unrounded FCF (164.45 - 52 - 387.65 = -275.2); rounded inputs are also accepted
 - Wrong answers now say "too high" or "too low"; the answer appears after 3 tries (with the hint, at the reduced reward)
