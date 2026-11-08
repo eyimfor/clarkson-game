@@ -401,6 +401,8 @@
         .fcf-table tr.scen td { font-weight: 700; color: #0055a5; }
         .chart-wrap svg { width: 100%; height: auto; display: block; }
         .dash-note { color: #6c757d; font-size: 0.9em; margin-top: 10px; }
+        .dash-warn { display: none; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 0.92em; color: #5c4500; }
+        .dash-warn.show { display: block; }
         .dash-grid > div, .dash-panel, .kpi { min-width: 0; }
         .ctrl input[type=number], .growth-row input { min-width: 0; }
         .fcf-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -1280,6 +1282,7 @@
                         </div>
                     </div>
                     <div>
+                        <div class="dash-warn" id="dash-warn"></div>
                         <div class="kpis" id="kpis"></div>
                         <div class="dash-panel">
                             <h4>Free cash flow, $000s: case (grey) and your assumptions (blue)</h4>
@@ -1691,6 +1694,16 @@
             }
             const res = valueModel(a), base = BASE_RESULT;
             const bad = !(a.r > a.g);
+            const warn = document.getElementById('dash-warn');
+            const discountMargins = a.cogs < 75.3;      // 74.0 with the discount; 75.6 without
+            const payingEarly = a.ap <= 10.5;
+            let msg = '';
+            if (!payingEarly && discountMargins) {
+                msg = `<strong>Check the consistency of your assumptions.</strong> AP days of ${a.ap} means paying suppliers after the 10-day discount window, but COGS / sales of ${a.cogs.toFixed(1)}% still includes the 2% trade discount. Nobody gets both. Without the discount the case's margins are COGS 75.6% and operating expenses 20.9% (the "No credit line" preset sets all three together).`;
+            } else if (payingEarly && !discountMargins) {
+                msg = `<strong>Check the consistency of your assumptions.</strong> AP days of ${a.ap} means paying inside the discount window, but COGS / sales of ${a.cogs.toFixed(1)}% does not include the 2% discount. Paying early without taking the discount gives up the only reason to pay early. With the discount the case uses COGS 75.0% in 1996 and 74.0% after.`;
+            }
+            warn.innerHTML = msg; warn.classList.toggle('show', !!msg);
             // KPIs
             const kpi = (k, v, d, cls) => `<div class="kpi"><div class="k">${k}</div><div class="v">${v}</div><div class="d ${cls}">${d}</div></div>`;
             const cls = (x, b) => Math.abs(x - b) < 0.5 ? 'flat' : (x > b ? 'up' : 'down');
