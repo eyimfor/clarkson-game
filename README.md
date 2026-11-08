@@ -127,6 +127,7 @@ The game presents 16 sequential steps, each focusing on a specific calculation:
 - Completion screen adds "What the ratios are worth": one-notch sensitivities of enterprise value (margins about -36% per point, discount rate about -18%, AR about -1.5% per day) and the share of value in the residual, without printing EV or equity
 - "Find it" pointers to the exhibit rows for 1995 cash, debt, net fixed assets, inventory and NOWC
 - Decorative emoji removed throughout
+- Assumptions dashboard (reachable from the welcome screen and the completion screen): sliders for every projection assumption, presets for the case, the no-credit-line path (AP 45 days, no discount), the 1995 working-capital ratios and a faster growth fade; the FCF path 1996-2001 charted against the case, a table of FCF, NOP, ΔNFA and ΔNOWC, and EV, equity, PV of explicit FCF and PV of residual value with their change from the case. All arithmetic runs in the page and reproduces the case solution (EV 2,017; equity 1,336; no-credit-line equity 415)
 
 **Version 2.1** (October 2026)
 - Step 16 now checks the step from your own enterprise value to equity (EV + non-operating assets - debt) instead of printing a final answer; the old printed values (EV $2,014, equity $1,333) did not match the case solution
